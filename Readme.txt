@@ -1,0 +1,4 @@
+-Make Server
+-Make Client
+-Make Music Player
+-Implement Sharing MP3 file

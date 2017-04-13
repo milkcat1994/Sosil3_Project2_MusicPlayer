@@ -1,0 +1,11 @@
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\bin\Debug\HW2_Server_Form.exe.config
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\bin\Debug\HW2_Server_Form.exe
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\bin\Debug\HW2_Server_Form.pdb
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\bin\Debug\HW2_Packet_Form.dll
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\bin\Debug\HW2_Packet_Form.pdb
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.csprojResolveAssemblyReference.cache
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.Properties.Resources.resources
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.csproj.GenerateResource.Cache
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.exe
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.pdb
+D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.server.resources
