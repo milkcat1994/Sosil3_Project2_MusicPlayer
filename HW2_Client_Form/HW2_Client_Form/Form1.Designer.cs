@@ -1,6 +1,6 @@
 ﻿namespace HW2_Client_Form
 {
-    partial class Form1
+    partial class form_Client
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -28,330 +28,359 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.connect_Button = new System.Windows.Forms.Button();
-            this.get_GroupBox = new System.Windows.Forms.GroupBox();
-            this.play_GroupBox = new System.Windows.Forms.GroupBox();
-            this.music_Player_Label = new System.Windows.Forms.Label();
-            this.ip_Panel = new System.Windows.Forms.Panel();
-            this.port_Panel = new System.Windows.Forms.Panel();
-            this.ip_Label = new System.Windows.Forms.Label();
-            this.port_Label = new System.Windows.Forms.Label();
-            this.ip_TextBox = new System.Windows.Forms.TextBox();
-            this.port_TextBox = new System.Windows.Forms.TextBox();
-            this.find_Path_Button = new System.Windows.Forms.Button();
-            this.download_Path_Panel = new System.Windows.Forms.Panel();
-            this.find_Path_Label = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.add_PlayList_Button = new System.Windows.Forms.Button();
-            this.music_List_Label = new System.Windows.Forms.Label();
-            this.get_ListView = new System.Windows.Forms.ListView();
-            this.Music_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Play_Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Bit_Rate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.play_ListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.music_Play_Label = new System.Windows.Forms.Label();
-            this.remove_PlayList_Button = new System.Windows.Forms.Button();
-            this.get_GroupBox.SuspendLayout();
-            this.play_GroupBox.SuspendLayout();
-            this.ip_Panel.SuspendLayout();
-            this.port_Panel.SuspendLayout();
-            this.download_Path_Panel.SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.button_Connect = new System.Windows.Forms.Button();
+            this.groupBox_Get = new System.Windows.Forms.GroupBox();
+            this.listView_Server_Music_List = new System.Windows.Forms.ListView();
+            this.server_Music_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.server_Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.server_Play_Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.server_Bit_Rate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label_Server_Music_List = new System.Windows.Forms.Label();
+            this.button_Add_PlayList = new System.Windows.Forms.Button();
+            this.panel_Storage_Path = new System.Windows.Forms.Panel();
+            this.textBox_Storage_Path = new System.Windows.Forms.TextBox();
+            this.label_Storage_Path = new System.Windows.Forms.Label();
+            this.button_Find_Path = new System.Windows.Forms.Button();
+            this.panel_Port = new System.Windows.Forms.Panel();
+            this.textBox_Port = new System.Windows.Forms.TextBox();
+            this.label_Port = new System.Windows.Forms.Label();
+            this.panel_IP = new System.Windows.Forms.Panel();
+            this.textBox_IP = new System.Windows.Forms.TextBox();
+            this.label_IP = new System.Windows.Forms.Label();
+            this.groupBox_Play = new System.Windows.Forms.GroupBox();
+            this.button_Remove_PlayList = new System.Windows.Forms.Button();
+            this.label_Play_List = new System.Windows.Forms.Label();
+            this.listView_Play_List = new System.Windows.Forms.ListView();
+            this.play_Music_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.play_Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.play_Play_Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.play_Bit_Rate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label_Music_Player = new System.Windows.Forms.Label();
+            this.folder_Browser_Dialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.progressBar_Download = new System.Windows.Forms.ProgressBar();
+            this.groupBox_Get.SuspendLayout();
+            this.panel_Storage_Path.SuspendLayout();
+            this.panel_Port.SuspendLayout();
+            this.panel_IP.SuspendLayout();
+            this.groupBox_Play.SuspendLayout();
             this.SuspendLayout();
             // 
-            // connect_Button
+            // button_Connect
             // 
-            this.connect_Button.Location = new System.Drawing.Point(86, 54);
-            this.connect_Button.Name = "connect_Button";
-            this.connect_Button.Size = new System.Drawing.Size(73, 31);
-            this.connect_Button.TabIndex = 3;
-            this.connect_Button.Text = "Connect";
-            this.connect_Button.UseVisualStyleBackColor = true;
-            this.connect_Button.Click += new System.EventHandler(this.btTelnet_Click);
+            this.button_Connect.Location = new System.Drawing.Point(86, 54);
+            this.button_Connect.Name = "button_Connect";
+            this.button_Connect.Size = new System.Drawing.Size(73, 31);
+            this.button_Connect.TabIndex = 3;
+            this.button_Connect.Text = "Connect";
+            this.button_Connect.UseVisualStyleBackColor = true;
+            this.button_Connect.Click += new System.EventHandler(this.button_Connect_Click);
             // 
-            // get_GroupBox
+            // groupBox_Get
             // 
-            this.get_GroupBox.Controls.Add(this.get_ListView);
-            this.get_GroupBox.Controls.Add(this.music_List_Label);
-            this.get_GroupBox.Controls.Add(this.add_PlayList_Button);
-            this.get_GroupBox.Controls.Add(this.download_Path_Panel);
-            this.get_GroupBox.Controls.Add(this.find_Path_Button);
-            this.get_GroupBox.Controls.Add(this.port_Panel);
-            this.get_GroupBox.Controls.Add(this.ip_Panel);
-            this.get_GroupBox.Controls.Add(this.connect_Button);
-            this.get_GroupBox.Location = new System.Drawing.Point(13, 12);
-            this.get_GroupBox.Name = "get_GroupBox";
-            this.get_GroupBox.Size = new System.Drawing.Size(406, 387);
-            this.get_GroupBox.TabIndex = 4;
-            this.get_GroupBox.TabStop = false;
-            this.get_GroupBox.Text = "Get Mp3 File";
+            this.groupBox_Get.Controls.Add(this.progressBar_Download);
+            this.groupBox_Get.Controls.Add(this.listView_Server_Music_List);
+            this.groupBox_Get.Controls.Add(this.label_Server_Music_List);
+            this.groupBox_Get.Controls.Add(this.button_Add_PlayList);
+            this.groupBox_Get.Controls.Add(this.panel_Storage_Path);
+            this.groupBox_Get.Controls.Add(this.button_Find_Path);
+            this.groupBox_Get.Controls.Add(this.panel_Port);
+            this.groupBox_Get.Controls.Add(this.panel_IP);
+            this.groupBox_Get.Controls.Add(this.button_Connect);
+            this.groupBox_Get.Location = new System.Drawing.Point(13, 12);
+            this.groupBox_Get.Name = "groupBox_Get";
+            this.groupBox_Get.Size = new System.Drawing.Size(406, 387);
+            this.groupBox_Get.TabIndex = 4;
+            this.groupBox_Get.TabStop = false;
+            this.groupBox_Get.Text = "Get Mp3 File";
             // 
-            // play_GroupBox
+            // listView_Server_Music_List
             // 
-            this.play_GroupBox.Controls.Add(this.remove_PlayList_Button);
-            this.play_GroupBox.Controls.Add(this.music_Play_Label);
-            this.play_GroupBox.Controls.Add(this.play_ListView);
-            this.play_GroupBox.Controls.Add(this.music_Player_Label);
-            this.play_GroupBox.Location = new System.Drawing.Point(449, 12);
-            this.play_GroupBox.Name = "play_GroupBox";
-            this.play_GroupBox.Size = new System.Drawing.Size(410, 387);
-            this.play_GroupBox.TabIndex = 5;
-            this.play_GroupBox.TabStop = false;
-            this.play_GroupBox.Text = "Play MP3 File";
+            this.listView_Server_Music_List.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.server_Music_Name,
+            this.server_Artist,
+            this.server_Play_Time,
+            this.server_Bit_Rate});
+            this.listView_Server_Music_List.Location = new System.Drawing.Point(6, 206);
+            this.listView_Server_Music_List.Name = "listView_Server_Music_List";
+            this.listView_Server_Music_List.Size = new System.Drawing.Size(391, 169);
+            this.listView_Server_Music_List.TabIndex = 10;
+            this.listView_Server_Music_List.UseCompatibleStateImageBehavior = false;
+            this.listView_Server_Music_List.View = System.Windows.Forms.View.Details;
             // 
-            // music_Player_Label
+            // server_Music_Name
             // 
-            this.music_Player_Label.AutoSize = true;
-            this.music_Player_Label.Font = new System.Drawing.Font("굴림", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.music_Player_Label.Location = new System.Drawing.Point(90, -4);
-            this.music_Player_Label.Name = "music_Player_Label";
-            this.music_Player_Label.Size = new System.Drawing.Size(170, 27);
-            this.music_Player_Label.TabIndex = 0;
-            this.music_Player_Label.Text = "Music Player";
+            this.server_Music_Name.Text = "Music Name";
+            this.server_Music_Name.Width = 102;
             // 
-            // ip_Panel
+            // server_Artist
             // 
-            this.ip_Panel.Controls.Add(this.ip_TextBox);
-            this.ip_Panel.Controls.Add(this.ip_Label);
-            this.ip_Panel.Location = new System.Drawing.Point(6, 20);
-            this.ip_Panel.Name = "ip_Panel";
-            this.ip_Panel.Size = new System.Drawing.Size(242, 28);
-            this.ip_Panel.TabIndex = 4;
+            this.server_Artist.Text = "Artist";
             // 
-            // port_Panel
+            // server_Play_Time
             // 
-            this.port_Panel.Controls.Add(this.port_TextBox);
-            this.port_Panel.Controls.Add(this.port_Label);
-            this.port_Panel.Location = new System.Drawing.Point(260, 20);
-            this.port_Panel.Name = "port_Panel";
-            this.port_Panel.Size = new System.Drawing.Size(146, 28);
-            this.port_Panel.TabIndex = 5;
+            this.server_Play_Time.Text = "Play Time";
+            this.server_Play_Time.Width = 86;
             // 
-            // ip_Label
+            // server_Bit_Rate
             // 
-            this.ip_Label.AutoSize = true;
-            this.ip_Label.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ip_Label.Location = new System.Drawing.Point(0, 0);
-            this.ip_Label.Name = "ip_Label";
-            this.ip_Label.Size = new System.Drawing.Size(24, 12);
-            this.ip_Label.TabIndex = 0;
-            this.ip_Label.Text = "IP :";
+            this.server_Bit_Rate.Text = "Bit Rate";
             // 
-            // port_Label
+            // label_Server_Music_List
             // 
-            this.port_Label.AutoSize = true;
-            this.port_Label.Dock = System.Windows.Forms.DockStyle.Left;
-            this.port_Label.Location = new System.Drawing.Point(0, 0);
-            this.port_Label.Name = "port_Label";
-            this.port_Label.Size = new System.Drawing.Size(35, 12);
-            this.port_Label.TabIndex = 0;
-            this.port_Label.Text = "Port :";
+            this.label_Server_Music_List.AutoSize = true;
+            this.label_Server_Music_List.Location = new System.Drawing.Point(28, 188);
+            this.label_Server_Music_List.Name = "label_Server_Music_List";
+            this.label_Server_Music_List.Size = new System.Drawing.Size(104, 12);
+            this.label_Server_Music_List.TabIndex = 9;
+            this.label_Server_Music_List.Text = "Server Music List";
             // 
-            // ip_TextBox
+            // button_Add_PlayList
             // 
-            this.ip_TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ip_TextBox.Location = new System.Drawing.Point(24, 0);
-            this.ip_TextBox.Name = "ip_TextBox";
-            this.ip_TextBox.Size = new System.Drawing.Size(218, 21);
-            this.ip_TextBox.TabIndex = 1;
+            this.button_Add_PlayList.Location = new System.Drawing.Point(257, 177);
+            this.button_Add_PlayList.Name = "button_Add_PlayList";
+            this.button_Add_PlayList.Size = new System.Drawing.Size(143, 23);
+            this.button_Add_PlayList.TabIndex = 8;
+            this.button_Add_PlayList.Text = "재생 목록에 추가";
+            this.button_Add_PlayList.UseVisualStyleBackColor = true;
+            this.button_Add_PlayList.Click += new System.EventHandler(this.button_Add_PlayList_Click);
             // 
-            // port_TextBox
+            // panel_Storage_Path
             // 
-            this.port_TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.port_TextBox.Location = new System.Drawing.Point(35, 0);
-            this.port_TextBox.Name = "port_TextBox";
-            this.port_TextBox.Size = new System.Drawing.Size(111, 21);
-            this.port_TextBox.TabIndex = 1;
+            this.panel_Storage_Path.Controls.Add(this.textBox_Storage_Path);
+            this.panel_Storage_Path.Controls.Add(this.label_Storage_Path);
+            this.panel_Storage_Path.Location = new System.Drawing.Point(8, 91);
+            this.panel_Storage_Path.Name = "panel_Storage_Path";
+            this.panel_Storage_Path.Size = new System.Drawing.Size(392, 26);
+            this.panel_Storage_Path.TabIndex = 7;
             // 
-            // find_Path_Button
+            // textBox_Storage_Path
             // 
-            this.find_Path_Button.Location = new System.Drawing.Point(262, 54);
-            this.find_Path_Button.Name = "find_Path_Button";
-            this.find_Path_Button.Size = new System.Drawing.Size(73, 31);
-            this.find_Path_Button.TabIndex = 6;
-            this.find_Path_Button.Text = "Find Path";
-            this.find_Path_Button.UseVisualStyleBackColor = true;
+            this.textBox_Storage_Path.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_Storage_Path.Location = new System.Drawing.Point(151, 0);
+            this.textBox_Storage_Path.Name = "textBox_Storage_Path";
+            this.textBox_Storage_Path.Size = new System.Drawing.Size(241, 21);
+            this.textBox_Storage_Path.TabIndex = 1;
             // 
-            // download_Path_Panel
+            // label_Storage_Path
             // 
-            this.download_Path_Panel.Controls.Add(this.textBox1);
-            this.download_Path_Panel.Controls.Add(this.find_Path_Label);
-            this.download_Path_Panel.Location = new System.Drawing.Point(8, 91);
-            this.download_Path_Panel.Name = "download_Path_Panel";
-            this.download_Path_Panel.Size = new System.Drawing.Size(392, 26);
-            this.download_Path_Panel.TabIndex = 7;
+            this.label_Storage_Path.AutoSize = true;
+            this.label_Storage_Path.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label_Storage_Path.Location = new System.Drawing.Point(0, 0);
+            this.label_Storage_Path.Name = "label_Storage_Path";
+            this.label_Storage_Path.Size = new System.Drawing.Size(151, 12);
+            this.label_Storage_Path.TabIndex = 0;
+            this.label_Storage_Path.Text = "MP3 File Download Path :";
             // 
-            // find_Path_Label
+            // button_Find_Path
             // 
-            this.find_Path_Label.AutoSize = true;
-            this.find_Path_Label.Dock = System.Windows.Forms.DockStyle.Left;
-            this.find_Path_Label.Location = new System.Drawing.Point(0, 0);
-            this.find_Path_Label.Name = "find_Path_Label";
-            this.find_Path_Label.Size = new System.Drawing.Size(151, 12);
-            this.find_Path_Label.TabIndex = 0;
-            this.find_Path_Label.Text = "MP3 File Download Path :";
+            this.button_Find_Path.Location = new System.Drawing.Point(262, 54);
+            this.button_Find_Path.Name = "button_Find_Path";
+            this.button_Find_Path.Size = new System.Drawing.Size(73, 31);
+            this.button_Find_Path.TabIndex = 6;
+            this.button_Find_Path.Text = "Find Path";
+            this.button_Find_Path.UseVisualStyleBackColor = true;
+            this.button_Find_Path.Click += new System.EventHandler(this.button_Find_Path_Click);
             // 
-            // textBox1
+            // panel_Port
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(151, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(241, 21);
-            this.textBox1.TabIndex = 1;
+            this.panel_Port.Controls.Add(this.textBox_Port);
+            this.panel_Port.Controls.Add(this.label_Port);
+            this.panel_Port.Location = new System.Drawing.Point(260, 20);
+            this.panel_Port.Name = "panel_Port";
+            this.panel_Port.Size = new System.Drawing.Size(146, 28);
+            this.panel_Port.TabIndex = 5;
             // 
-            // add_PlayList_Button
+            // textBox_Port
             // 
-            this.add_PlayList_Button.Location = new System.Drawing.Point(257, 177);
-            this.add_PlayList_Button.Name = "add_PlayList_Button";
-            this.add_PlayList_Button.Size = new System.Drawing.Size(143, 23);
-            this.add_PlayList_Button.TabIndex = 8;
-            this.add_PlayList_Button.Text = "재생 목록에 추가";
-            this.add_PlayList_Button.UseVisualStyleBackColor = true;
+            this.textBox_Port.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_Port.Location = new System.Drawing.Point(35, 0);
+            this.textBox_Port.Name = "textBox_Port";
+            this.textBox_Port.Size = new System.Drawing.Size(111, 21);
+            this.textBox_Port.TabIndex = 1;
             // 
-            // music_List_Label
+            // label_Port
             // 
-            this.music_List_Label.AutoSize = true;
-            this.music_List_Label.Location = new System.Drawing.Point(28, 188);
-            this.music_List_Label.Name = "music_List_Label";
-            this.music_List_Label.Size = new System.Drawing.Size(100, 12);
-            this.music_List_Label.TabIndex = 9;
-            this.music_List_Label.Text = "Sever Music List";
+            this.label_Port.AutoSize = true;
+            this.label_Port.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label_Port.Location = new System.Drawing.Point(0, 0);
+            this.label_Port.Name = "label_Port";
+            this.label_Port.Size = new System.Drawing.Size(35, 12);
+            this.label_Port.TabIndex = 0;
+            this.label_Port.Text = "Port :";
             // 
-            // get_ListView
+            // panel_IP
             // 
-            this.get_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Music_Name,
-            this.Artist,
-            this.Play_Time,
-            this.Bit_Rate});
-            this.get_ListView.Location = new System.Drawing.Point(6, 206);
-            this.get_ListView.Name = "get_ListView";
-            this.get_ListView.Size = new System.Drawing.Size(391, 169);
-            this.get_ListView.TabIndex = 10;
-            this.get_ListView.UseCompatibleStateImageBehavior = false;
-            this.get_ListView.View = System.Windows.Forms.View.Details;
+            this.panel_IP.Controls.Add(this.textBox_IP);
+            this.panel_IP.Controls.Add(this.label_IP);
+            this.panel_IP.Location = new System.Drawing.Point(6, 20);
+            this.panel_IP.Name = "panel_IP";
+            this.panel_IP.Size = new System.Drawing.Size(242, 28);
+            this.panel_IP.TabIndex = 4;
             // 
-            // Music_Name
+            // textBox_IP
             // 
-            this.Music_Name.Text = "Music Name";
+            this.textBox_IP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_IP.Location = new System.Drawing.Point(24, 0);
+            this.textBox_IP.Name = "textBox_IP";
+            this.textBox_IP.Size = new System.Drawing.Size(218, 21);
+            this.textBox_IP.TabIndex = 1;
             // 
-            // Artist
+            // label_IP
             // 
-            this.Artist.Text = "Artist";
+            this.label_IP.AutoSize = true;
+            this.label_IP.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label_IP.Location = new System.Drawing.Point(0, 0);
+            this.label_IP.Name = "label_IP";
+            this.label_IP.Size = new System.Drawing.Size(24, 12);
+            this.label_IP.TabIndex = 0;
+            this.label_IP.Text = "IP :";
             // 
-            // Play_Time
+            // groupBox_Play
             // 
-            this.Play_Time.Text = "Play Time";
+            this.groupBox_Play.Controls.Add(this.button_Remove_PlayList);
+            this.groupBox_Play.Controls.Add(this.label_Play_List);
+            this.groupBox_Play.Controls.Add(this.listView_Play_List);
+            this.groupBox_Play.Controls.Add(this.label_Music_Player);
+            this.groupBox_Play.Location = new System.Drawing.Point(449, 12);
+            this.groupBox_Play.Name = "groupBox_Play";
+            this.groupBox_Play.Size = new System.Drawing.Size(410, 387);
+            this.groupBox_Play.TabIndex = 5;
+            this.groupBox_Play.TabStop = false;
+            this.groupBox_Play.Text = "Play MP3 File";
             // 
-            // Bit_Rate
+            // button_Remove_PlayList
             // 
-            this.Bit_Rate.Text = "Bit Rate";
+            this.button_Remove_PlayList.Location = new System.Drawing.Point(261, 177);
+            this.button_Remove_PlayList.Name = "button_Remove_PlayList";
+            this.button_Remove_PlayList.Size = new System.Drawing.Size(143, 23);
+            this.button_Remove_PlayList.TabIndex = 11;
+            this.button_Remove_PlayList.Text = "재생 목록에 삭제";
+            this.button_Remove_PlayList.UseVisualStyleBackColor = true;
             // 
-            // play_ListView
+            // label_Play_List
             // 
-            this.play_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-            this.play_ListView.Location = new System.Drawing.Point(6, 206);
-            this.play_ListView.Name = "play_ListView";
-            this.play_ListView.Size = new System.Drawing.Size(398, 169);
-            this.play_ListView.TabIndex = 11;
-            this.play_ListView.UseCompatibleStateImageBehavior = false;
-            this.play_ListView.View = System.Windows.Forms.View.Details;
+            this.label_Play_List.AutoSize = true;
+            this.label_Play_List.Location = new System.Drawing.Point(6, 188);
+            this.label_Play_List.Name = "label_Play_List";
+            this.label_Play_List.Size = new System.Drawing.Size(54, 12);
+            this.label_Play_List.TabIndex = 11;
+            this.label_Play_List.Text = "Play List";
             // 
-            // columnHeader1
+            // listView_Play_List
             // 
-            this.columnHeader1.Text = "Music Name";
+            this.listView_Play_List.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.play_Music_Name,
+            this.play_Artist,
+            this.play_Play_Time,
+            this.play_Bit_Rate});
+            this.listView_Play_List.Location = new System.Drawing.Point(6, 206);
+            this.listView_Play_List.Name = "listView_Play_List";
+            this.listView_Play_List.Size = new System.Drawing.Size(398, 169);
+            this.listView_Play_List.TabIndex = 11;
+            this.listView_Play_List.UseCompatibleStateImageBehavior = false;
+            this.listView_Play_List.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader2
+            // play_Music_Name
             // 
-            this.columnHeader2.Text = "Artist";
+            this.play_Music_Name.Text = "Music Name";
             // 
-            // columnHeader3
+            // play_Artist
             // 
-            this.columnHeader3.Text = "Play Time";
+            this.play_Artist.Text = "Artist";
             // 
-            // columnHeader4
+            // play_Play_Time
             // 
-            this.columnHeader4.Text = "Bit Rate";
+            this.play_Play_Time.Text = "Play Time";
+            this.play_Play_Time.Width = 77;
             // 
-            // music_Play_Label
+            // play_Bit_Rate
             // 
-            this.music_Play_Label.AutoSize = true;
-            this.music_Play_Label.Location = new System.Drawing.Point(6, 188);
-            this.music_Play_Label.Name = "music_Play_Label";
-            this.music_Play_Label.Size = new System.Drawing.Size(54, 12);
-            this.music_Play_Label.TabIndex = 11;
-            this.music_Play_Label.Text = "Play List";
+            this.play_Bit_Rate.Text = "Bit Rate";
             // 
-            // remove_PlayList_Button
+            // label_Music_Player
             // 
-            this.remove_PlayList_Button.Location = new System.Drawing.Point(261, 177);
-            this.remove_PlayList_Button.Name = "remove_PlayList_Button";
-            this.remove_PlayList_Button.Size = new System.Drawing.Size(143, 23);
-            this.remove_PlayList_Button.TabIndex = 11;
-            this.remove_PlayList_Button.Text = "재생 목록에 삭제";
-            this.remove_PlayList_Button.UseVisualStyleBackColor = true;
+            this.label_Music_Player.AutoSize = true;
+            this.label_Music_Player.Font = new System.Drawing.Font("굴림", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label_Music_Player.Location = new System.Drawing.Point(90, -4);
+            this.label_Music_Player.Name = "label_Music_Player";
+            this.label_Music_Player.Size = new System.Drawing.Size(170, 27);
+            this.label_Music_Player.TabIndex = 0;
+            this.label_Music_Player.Text = "Music Player";
             // 
-            // Form1
+            // folder_Browser_Dialog
+            // 
+            this.folder_Browser_Dialog.SelectedPath = "D:\\";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // progressBar_Download
+            // 
+            this.progressBar_Download.Location = new System.Drawing.Point(8, 149);
+            this.progressBar_Download.Name = "progressBar_Download";
+            this.progressBar_Download.Size = new System.Drawing.Size(389, 23);
+            this.progressBar_Download.TabIndex = 11;
+            // 
+            // form_Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(871, 411);
-            this.Controls.Add(this.play_GroupBox);
-            this.Controls.Add(this.get_GroupBox);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.get_GroupBox.ResumeLayout(false);
-            this.get_GroupBox.PerformLayout();
-            this.play_GroupBox.ResumeLayout(false);
-            this.play_GroupBox.PerformLayout();
-            this.ip_Panel.ResumeLayout(false);
-            this.ip_Panel.PerformLayout();
-            this.port_Panel.ResumeLayout(false);
-            this.port_Panel.PerformLayout();
-            this.download_Path_Panel.ResumeLayout(false);
-            this.download_Path_Panel.PerformLayout();
+            this.Controls.Add(this.groupBox_Play);
+            this.Controls.Add(this.groupBox_Get);
+            this.Name = "form_Client";
+            this.Text = "Client";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_Client_FormClosed);
+            this.groupBox_Get.ResumeLayout(false);
+            this.groupBox_Get.PerformLayout();
+            this.panel_Storage_Path.ResumeLayout(false);
+            this.panel_Storage_Path.PerformLayout();
+            this.panel_Port.ResumeLayout(false);
+            this.panel_Port.PerformLayout();
+            this.panel_IP.ResumeLayout(false);
+            this.panel_IP.PerformLayout();
+            this.groupBox_Play.ResumeLayout(false);
+            this.groupBox_Play.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Button connect_Button;
-        private System.Windows.Forms.GroupBox get_GroupBox;
-        private System.Windows.Forms.GroupBox play_GroupBox;
-        private System.Windows.Forms.Label music_Player_Label;
-        private System.Windows.Forms.Panel port_Panel;
-        private System.Windows.Forms.TextBox port_TextBox;
-        private System.Windows.Forms.Label port_Label;
-        private System.Windows.Forms.Panel ip_Panel;
-        private System.Windows.Forms.TextBox ip_TextBox;
-        private System.Windows.Forms.Label ip_Label;
-        private System.Windows.Forms.Button find_Path_Button;
-        private System.Windows.Forms.Panel download_Path_Panel;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label find_Path_Label;
-        private System.Windows.Forms.Button add_PlayList_Button;
-        private System.Windows.Forms.ListView get_ListView;
-        private System.Windows.Forms.Label music_List_Label;
-        private System.Windows.Forms.ColumnHeader Music_Name;
-        private System.Windows.Forms.ColumnHeader Artist;
-        private System.Windows.Forms.ColumnHeader Play_Time;
-        private System.Windows.Forms.ColumnHeader Bit_Rate;
-        private System.Windows.Forms.ListView play_ListView;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.Button remove_PlayList_Button;
-        private System.Windows.Forms.Label music_Play_Label;
+        private System.Windows.Forms.Button button_Connect;
+        private System.Windows.Forms.GroupBox groupBox_Get;
+        private System.Windows.Forms.GroupBox groupBox_Play;
+        private System.Windows.Forms.Label label_Music_Player;
+        private System.Windows.Forms.Panel panel_Port;
+        private System.Windows.Forms.TextBox textBox_Port;
+        private System.Windows.Forms.Label label_Port;
+        private System.Windows.Forms.Panel panel_IP;
+        private System.Windows.Forms.TextBox textBox_IP;
+        private System.Windows.Forms.Label label_IP;
+        private System.Windows.Forms.Button button_Find_Path;
+        private System.Windows.Forms.Panel panel_Storage_Path;
+        private System.Windows.Forms.TextBox textBox_Storage_Path;
+        private System.Windows.Forms.Label label_Storage_Path;
+        private System.Windows.Forms.Button button_Add_PlayList;
+        private System.Windows.Forms.ListView listView_Server_Music_List;
+        private System.Windows.Forms.Label label_Server_Music_List;
+        private System.Windows.Forms.ColumnHeader server_Music_Name;
+        private System.Windows.Forms.ColumnHeader server_Artist;
+        private System.Windows.Forms.ColumnHeader server_Play_Time;
+        private System.Windows.Forms.ColumnHeader server_Bit_Rate;
+        private System.Windows.Forms.ListView listView_Play_List;
+        private System.Windows.Forms.ColumnHeader play_Music_Name;
+        private System.Windows.Forms.ColumnHeader play_Artist;
+        private System.Windows.Forms.ColumnHeader play_Play_Time;
+        private System.Windows.Forms.ColumnHeader play_Bit_Rate;
+        private System.Windows.Forms.Button button_Remove_PlayList;
+        private System.Windows.Forms.Label label_Play_List;
+        private System.Windows.Forms.FolderBrowserDialog folder_Browser_Dialog;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ProgressBar progressBar_Download;
     }
 }
 

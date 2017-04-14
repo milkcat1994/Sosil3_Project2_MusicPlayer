@@ -16,7 +16,7 @@ namespace HW2_Server_Form
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new server());
+            Application.Run(new form_Server());
         }
     }
 }

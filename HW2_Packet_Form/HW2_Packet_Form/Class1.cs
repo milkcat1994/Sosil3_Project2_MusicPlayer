@@ -12,7 +12,8 @@ namespace HW2_Packet_Form
     public enum PacketType
     {
         초기화 = 0,
-        로그인
+        로그인 = 1,
+        리스트,
     }
 
     public enum PacketSendERROR
@@ -79,6 +80,25 @@ namespace HW2_Packet_Form
         public Login()
         {
             this.m_strID = null;
+            this.Type = 1;
+        }
+    }
+
+    [Serializable]
+    public class MusicList : Packet
+    {
+        public string music_Name;
+        public string music_Singer;
+        public string music_Play_Time;
+        public string music_Bit_Rate;
+
+        public MusicList()
+        {
+            this.music_Name = null;
+            this.music_Singer = null;
+            this.music_Play_Time = null;
+            this.music_Bit_Rate = null;
+            this.Type = 2;
         }
     }
 }
