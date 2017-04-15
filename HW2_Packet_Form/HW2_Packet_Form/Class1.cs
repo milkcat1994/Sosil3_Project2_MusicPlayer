@@ -13,7 +13,8 @@ namespace HW2_Packet_Form
     {
         초기화 = 0,
         로그인 = 1,
-        리스트,
+        리스트 = 2,
+        client_Request =3,
     }
 
     public enum PacketSendERROR
@@ -87,6 +88,7 @@ namespace HW2_Packet_Form
     [Serializable]
     public class MusicList : Packet
     {
+        //음악 
         public string music_Name;
         public string music_Singer;
         public string music_Play_Time;
@@ -99,6 +101,24 @@ namespace HW2_Packet_Form
             this.music_Play_Time = null;
             this.music_Bit_Rate = null;
             this.Type = 2;
+        }
+    }
+
+    [Serializable]
+    public class ClientRequest : Packet
+    {
+        public enum RequestType
+        {
+            music_File,
+        }
+
+        //요청 타입
+        public int request_type;
+
+        public ClientRequest(int request_type)
+        {
+            this.request_type = request_type;
+            this.Type = 3;
         }
     }
 }
