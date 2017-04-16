@@ -15,6 +15,8 @@ namespace HW2_Packet_Form
         로그인 = 1,
         리스트 = 2,
         client_Request =3,
+        server_Music =4,
+        end_Stream = 5,
     }
 
     public enum PacketSendERROR
@@ -29,8 +31,10 @@ namespace HW2_Packet_Form
     [Serializable]
     public class Packet
     {
+        public const int buffer_Size = 1024 * 2;
         public int Length;
         public int Type;
+        public byte[] buffer;
 
 
         public Packet()
@@ -40,18 +44,18 @@ namespace HW2_Packet_Form
         }
 
         //byte단위의 패킷으로 생성.
-        public static byte[] Serialize(Object o)
+        public static byte[] Serialize(Object o, int size)
         {
-            MemoryStream ms = new MemoryStream(1024 * 4);
+            MemoryStream ms = new MemoryStream(size);
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(ms, o);
             return ms.ToArray();
         }
 
         //받은 쪽에서 포장된 패킷을 원형으로 되돌리는 함수
-        public static Object Deserialize(byte[] bt)
+        public static Object Deserialize(byte[] bt, int size)
         {
-            MemoryStream ms = new MemoryStream(1024 * 2);
+            MemoryStream ms = new MemoryStream(size);
             foreach (byte b in bt)
             {
                 ms.WriteByte(b);
@@ -113,12 +117,48 @@ namespace HW2_Packet_Form
         }
 
         //요청 타입
-        public int request_type;
+        public RequestType request_type;
+        //선택한 뮤직 이름
+        public string music_Name;
 
-        public ClientRequest(int request_type)
+        public ClientRequest(RequestType request_type)
         {
             this.request_type = request_type;
+            this.music_Name = null;
             this.Type = 3;
+        }
+    }
+
+    [Serializable]
+    public class ServerMusic : Packet
+    {
+        //음악 
+        public string music_Name;
+
+        public ServerMusic()
+        {
+            this.music_Name = null;
+            this.Type = 4;
+            this.buffer = new byte[Packet.buffer_Size];
+        }
+    }
+
+    [Serializable]
+    public class EndStream : Packet
+    {
+        //음악 
+        public string music_Name;
+        public string music_Singer;
+        public string music_Play_Time;
+        public string music_Bit_Rate;
+
+        public EndStream()
+        {
+            this.music_Name = null;
+            this.music_Singer = null;
+            this.music_Play_Time = null;
+            this.music_Bit_Rate = null;
+            this.Type = 5;
         }
     }
 }

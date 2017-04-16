@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.button_Connect = new System.Windows.Forms.Button();
             this.groupBox_Get = new System.Windows.Forms.GroupBox();
+            this.progressBar_Download = new System.Windows.Forms.ProgressBar();
             this.listView_Server_Music_List = new System.Windows.Forms.ListView();
             this.server_Music_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.server_Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -59,7 +60,6 @@
             this.label_Music_Player = new System.Windows.Forms.Label();
             this.folder_Browser_Dialog = new System.Windows.Forms.FolderBrowserDialog();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.progressBar_Download = new System.Windows.Forms.ProgressBar();
             this.groupBox_Get.SuspendLayout();
             this.panel_Storage_Path.SuspendLayout();
             this.panel_Port.SuspendLayout();
@@ -69,9 +69,9 @@
             // 
             // button_Connect
             // 
-            this.button_Connect.Location = new System.Drawing.Point(86, 54);
+            this.button_Connect.Location = new System.Drawing.Point(59, 54);
             this.button_Connect.Name = "button_Connect";
-            this.button_Connect.Size = new System.Drawing.Size(73, 31);
+            this.button_Connect.Size = new System.Drawing.Size(100, 31);
             this.button_Connect.TabIndex = 3;
             this.button_Connect.Text = "Connect";
             this.button_Connect.UseVisualStyleBackColor = true;
@@ -94,6 +94,13 @@
             this.groupBox_Get.TabIndex = 4;
             this.groupBox_Get.TabStop = false;
             this.groupBox_Get.Text = "Get Mp3 File";
+            // 
+            // progressBar_Download
+            // 
+            this.progressBar_Download.Location = new System.Drawing.Point(8, 149);
+            this.progressBar_Download.Name = "progressBar_Download";
+            this.progressBar_Download.Size = new System.Drawing.Size(389, 23);
+            this.progressBar_Download.TabIndex = 11;
             // 
             // listView_Server_Music_List
             // 
@@ -318,13 +325,6 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // progressBar_Download
-            // 
-            this.progressBar_Download.Location = new System.Drawing.Point(8, 149);
-            this.progressBar_Download.Name = "progressBar_Download";
-            this.progressBar_Download.Size = new System.Drawing.Size(389, 23);
-            this.progressBar_Download.TabIndex = 11;
-            // 
             // form_Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -335,6 +335,7 @@
             this.Name = "form_Client";
             this.Text = "Client";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_Client_FormClosed);
+            this.Load += new System.EventHandler(this.form_Client_Load);
             this.groupBox_Get.ResumeLayout(false);
             this.groupBox_Get.PerformLayout();
             this.panel_Storage_Path.ResumeLayout(false);
@@ -367,10 +368,6 @@
         private System.Windows.Forms.Button button_Add_PlayList;
         private System.Windows.Forms.ListView listView_Server_Music_List;
         private System.Windows.Forms.Label label_Server_Music_List;
-        private System.Windows.Forms.ColumnHeader server_Music_Name;
-        private System.Windows.Forms.ColumnHeader server_Artist;
-        private System.Windows.Forms.ColumnHeader server_Play_Time;
-        private System.Windows.Forms.ColumnHeader server_Bit_Rate;
         private System.Windows.Forms.ListView listView_Play_List;
         private System.Windows.Forms.ColumnHeader play_Music_Name;
         private System.Windows.Forms.ColumnHeader play_Artist;
@@ -381,6 +378,10 @@
         private System.Windows.Forms.FolderBrowserDialog folder_Browser_Dialog;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ProgressBar progressBar_Download;
+        public System.Windows.Forms.ColumnHeader server_Music_Name;
+        public System.Windows.Forms.ColumnHeader server_Artist;
+        public System.Windows.Forms.ColumnHeader server_Play_Time;
+        public System.Windows.Forms.ColumnHeader server_Bit_Rate;
     }
 }
 

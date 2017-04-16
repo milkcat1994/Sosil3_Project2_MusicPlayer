@@ -5,6 +5,5 @@ D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Packet_Form\HW2_Pack
 D:\school\3\응용소프트웨어 실습\과제\과제2\HW2_Packet_Form\HW2_Packet_Form\obj\Debug\HW2_Packet_Form.pdb
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Packet_Form\HW2_Packet_Form\bin\Debug\HW2_Packet_Form.dll
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Packet_Form\HW2_Packet_Form\bin\Debug\HW2_Packet_Form.pdb
-D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Packet_Form\HW2_Packet_Form\obj\Debug\HW2_Packet_Form.csprojResolveAssemblyReference.cache
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Packet_Form\HW2_Packet_Form\obj\Debug\HW2_Packet_Form.dll
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Packet_Form\HW2_Packet_Form\obj\Debug\HW2_Packet_Form.pdb

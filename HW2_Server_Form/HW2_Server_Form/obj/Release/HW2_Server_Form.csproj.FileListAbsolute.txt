@@ -1,0 +1,15 @@
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\bin\Release\HW2_Server_Form.exe.config
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\Interop.Shell32.dll
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\HW2_Server_Form.csproj.ResolveComReference.cache
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\bin\Release\HW2_Server_Form.exe
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\bin\Release\HW2_Server_Form.pdb
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\bin\Release\HW2_Packet_Form.dll
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\bin\Release\HW2_Packet_Form.pdb
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\bin\Release\Interop.Shell32.dll
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\HW2_Server_Form.form_Server.resources
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\HW2_Server_Form.Properties.Resources.resources
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\HW2_Server_Form.csproj.GenerateResource.Cache
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\HW2_Server_Form.exe
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\HW2_Server_Form.pdb
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\HW2_Server_Form.csprojResolveAssemblyReference.cache
+D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Release\Interop.WMPLib.dll
