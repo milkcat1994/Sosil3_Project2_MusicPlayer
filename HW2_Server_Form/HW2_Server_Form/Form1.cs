@@ -129,7 +129,6 @@ namespace HW2_Server_Form
                         nRead = 0;                        
                         if (!m_NetStream.DataAvailable) { continue; } 
                         nRead = this.m_NetStream.Read(this.readBuffer, 0, this.readBuffer.Length);
-                        MessageBox.Show("nRead : " + nRead);
                         if (nRead <= 0) continue;
                     }
                     catch
@@ -151,6 +150,7 @@ namespace HW2_Server_Form
                                 this.textBox_Music_Log.AppendText("패킷 전송 성공. Initialize Class Data is" + this.m_InitializeClass.Data + "\n");
                                 break;
                             }
+                        //8.2_score : 1
                         case (int)PacketType.client_Request:
                             {
                                 this.m_clientRequestClass = (ClientRequest)Packet.Deserialize(this.readBuffer, readBuffer.Length);
@@ -240,6 +240,8 @@ namespace HW2_Server_Form
             }
         }
 
+        //8.2_score : 1
+        //클라이언트가 요청한 file name 파일을 전송한다.
         //file name을 인자로 받아 해당 파일 listview에서 검색 뒤 경로 전송
         public void sendMp3FiletoClient(string fileName)
         {            
@@ -248,8 +250,6 @@ namespace HW2_Server_Form
             {
                 if (item.Extension.Equals(".mp3"))
                 {
-                    MessageBox.Show("Server: 클라요청 이름" + m_clientRequestClass.music_Name +"length : "+ m_clientRequestClass.music_Name.Length+"\n"
-                        + "item 이름 : " + item.Name + "length : " + item.Name.Length);
                     //Client Request의 음악 이름이 아닌경우 패스!
                     if (item.Name.Equals(m_clientRequestClass.music_Name + ".mp3"))
                     {

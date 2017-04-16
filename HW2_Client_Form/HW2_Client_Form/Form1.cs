@@ -12,6 +12,7 @@ using System.IO;    //DirectoryInfo사용
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Collections;
 using HW2_Packet_Form;
 using Shell32;      //ShellClass()사용 shell controls 참조 추가
 using WMPLib;       //Windows Media Player 사용 위한 참조 추가
@@ -33,7 +34,7 @@ namespace HW2_Client_Form
         //Thread 선언
         private Thread m_Thread = null;
         //receive Thread
-        private Thread r_Thread = null;
+        private Thread s_Thread = null;
 
         public Initialize m_InitializeClass;
         public Login m_LoginClass;
@@ -50,6 +51,18 @@ namespace HW2_Client_Form
 
         //파일 저장 경로
         string storage_Path;
+
+        ArrayList player_ArrList = new ArrayList();
+
+        WindowsMediaPlayer WMP = null;
+        IWMPMedia media = null;
+        IWMPPlaylist PlayList = null;
+        IWMPPlaylistArray PlayListArray = null;
+        int currentPlayindex = 1;
+        int curPosition = 0;
+        double curFile_Duration = 0;
+        string curFile_Name = null;
+        int thickTime = 0;
 
         public void Send()
         {
@@ -143,21 +156,24 @@ namespace HW2_Client_Form
                     lv_Item.SubItems.Add(m_musicListClass.music_Bit_Rate);
                     this.listView_Server_Music_List.Items.Add(lv_Item);
                 }
+                //서버로 부터 파일을 전송받아 해당 경로에 파일 생성
+                //12_1_score : 1
                 else if(packet.Type == (int)PacketType.server_Music || packet.Type == (int)PacketType.end_Stream) {
                         if (packet.Type == (int)PacketType.server_Music)
                         {
-                            this.m_serverMusicClass = (ServerMusic)Packet.Deserialize(this.readBuffer,this.readBuffer.Length);
+                        this.m_serverMusicClass = (ServerMusic)Packet.Deserialize(this.readBuffer,this.readBuffer.Length);
                             string music_Name = m_serverMusicClass.music_Name;
                             //open and create storage Path
-                            string storage_File = textBox_Storage_Path.ToString() + @"\" + music_Name + ".mp3";
-
+                            string storage_File = textBox_Storage_Path.Text.ToString() + "\\" + music_Name + ".mp3";
+                            storage_File.Replace("\\","\\\\");
                             FileStream stream = null;
                             //stream = File.Open(storage_File, FileMode.Append);
-                            stream = File.Open(@"C: \Users\지용\Pictures\" + music_Name + ".mp3", FileMode.Append);
+                            stream = File.Open(storage_File, FileMode.Append);
                             stream.Write(m_serverMusicClass.buffer, 0, m_serverMusicClass.buffer.Length);
                             stream.Close();
                         }
-
+                        //13_1_score : 0.8
+                        //해당 파일 전송 완료 패킷을 받고, Play List View에 해당 파일 추가
                         if (packet.Type == (int)PacketType.end_Stream)
                         {
                             this.m_endStreamClass = (EndStream)Packet.Deserialize(this.readBuffer, this.readBuffer.Length);
@@ -166,6 +182,8 @@ namespace HW2_Client_Form
                             lv_Item.SubItems.Add(m_endStreamClass.music_Play_Time);
                             lv_Item.SubItems.Add(m_endStreamClass.music_Bit_Rate);
                             this.listView_Play_List.Items.Add(lv_Item);
+                        //array List 에 받은 데이터 삽입
+                            player_ArrList.Add(m_endStreamClass.music_Name);
                             MessageBox.Show("Client : Complete Download");
                         }
                     //add file Length
@@ -233,6 +251,7 @@ namespace HW2_Client_Form
                 return;
             }
 
+            //12.1_score : 1
             //누를경우 ListView의 선택한 것을 서버에 Music Name으로 보내 다운받기
             //ListView에 선택된것 확인하여 전송
             //패킷을 통해 Client_Request 전송
@@ -254,11 +273,117 @@ namespace HW2_Client_Form
             //이후는 receive_Thread에 의해 계속 리시브를 받고있음
         }
 
+
+        private void button_Music_Play_Click(object sender, EventArgs e)
+        {
+
+            if (WMP != null)
+            {
+                WMP.controls.play();
+                return;
+            }
+            WMP = new WindowsMediaPlayer();
+            //thickTime = (int)curFile_Duration / 400;
+
+            //this.s_Thread = new Thread(new ThreadStart(trackBar_Music_Player_Sync));
+            //this.s_Thread.Start();
+            PlayList = WMP.newPlaylist("MusicPlayer", "");
+
+            //현재 플레이리스트 지정
+            WMP.currentPlaylist = PlayList;
+
+            for (int i = 0; i < player_ArrList.Count; i++)
+            {
+                string storage_File = textBox_Storage_Path.Text.ToString() + "\\" + player_ArrList[i] + ".mp3";
+                storage_File.Replace("\\", "\\\\");
+                media = WMP.newMedia(storage_File);
+                //재생 목록에 추가
+                PlayList.appendItem(media);
+            }
+
+            WMP.controls.play();
+            curFile_Duration = WMP.currentMedia.duration;
+            MessageBox.Show("Client : duration ->" + curFile_Duration);
+            time_TrackBar_Increase.Start();
+        }
+
+        private void button_Music_Pause_Click(object sender, EventArgs e)
+        {
+            WMP.controls.pause();
+            label1.Text = trackBar_Music_Player.Value.ToString();
+            label2.Text = WMP.controls.currentPosition.ToString();
+        }
+
+        private void button_Music_Stop_Click(object sender, EventArgs e)
+        {
+            WMP.controls.stop();
+        }
+
+        //16.1_score : 0.3
+        //삭제할 항목 선택후 버튼 클릭시 해당 ListView item 삭제
+        private void button_Remove_PlayList_Click(object sender, EventArgs e)
+        {
+            if(listView_Play_List != null)
+            {
+                string music_name = listView_Play_List.FocusedItem.SubItems[0].Text;
+                //arrlist내 해당 파일 index가져오기
+                int arrList_index = player_ArrList.IndexOf(music_name);
+                //현재 재생 index와 list내 index 동일시 오류 메시지 출력
+                if (arrList_index == currentPlayindex)
+                {
+                    MessageBox.Show("현재 재생중인 곡은 삭제할 수 없습니다.");
+                    return;
+                }
+                listView_Play_List.FocusedItem.Remove();
+                player_ArrList.Remove(music_name);
+            }
+        }
+
+        private void button_Previous_Music_Click(object sender, EventArgs e)
+        {
+            //WMPLib.IWMPPlaylist plThreeList =;
+            PlayListArray = WMP.playlistCollection.getByName("MusicPlayer");
+            if(currentPlayindex == 1)
+            {
+                MessageBox.Show("리스트의 첫곡입니다.");
+                return;
+            }
+            currentPlayindex -= 1;
+            WMP.controls.stop();
+            WMP.controls.previous();
+            WMP.controls.play();
+        }
+
+        private void button_Next_Music_Click(object sender, EventArgs e)
+        {
+            int temCount = player_ArrList.Count;
+            MessageBox.Show("Client temCount : " + temCount 
+                +"\n currentPlayindex : " + currentPlayindex);
+            //왜 -1일까여..
+            if (currentPlayindex >= (temCount-1))
+            {
+                MessageBox.Show("리스트의 마지막곡입니다.");
+                return;
+            }
+            currentPlayindex += 1;
+            WMP.controls.stop();
+            WMP.controls.next();
+            WMP.controls.play();
+        }
+
+        private void trackBar_Music_Player_Scroll(object sender, EventArgs e)
+        {
+            curPosition = trackBar_Music_Player.Value;
+            WMP.controls.currentPosition = (double)curPosition * (curFile_Duration/(double)400);
+            trackBar_Music_Player.Value =
+                (int)(WMP.controls.currentPosition * ((double)400 / curFile_Duration));
+        }
+
         private void form_Client_Load(object sender, EventArgs e)
         {
             this.textBox_IP.AppendText("192.168.18.2");
         }
-
+        
         private void form_Client_FormClosed(object sender, FormClosedEventArgs e)
         {
             //해당 값들에 대해 널값이 아닌경우에만 실행하여 exit실행
@@ -266,6 +391,23 @@ namespace HW2_Client_Form
                 this.m_NetStream.Close();
             if (this.m_Thread != null)
                 this.m_Thread.Abort();
+            if(this.WMP != null)
+                WMP.controls.stop();
+        }
+        
+        //TrackBar 수정해주는 timer
+        private void time_TrackBar_Increase_Tick(object sender, EventArgs e)
+        {
+            time_TrackBar_Increase.Interval = (int)((double)1000 * (WMP.currentMedia.duration/(double)400));
+            curFile_Duration = WMP.currentMedia.duration;
+            label3.Text = WMP.currentMedia.duration.ToString();
+            if (curFile_Duration == 0) return;
+
+            //PlayList.get_Item(0);
+            trackBar_Music_Player.Value = 
+                (int)(WMP.controls.currentPosition * ((double)400 / curFile_Duration));
+            if (trackBar_Music_Player.Value == 399)
+                currentPlayindex += 1;
         }
     }
 }
