@@ -16,7 +16,6 @@ using System.Threading;
 using HW2_Packet_Form;
 using Shell32;      //ShellClass()사용 shell controls 참조 추가
 using WMPLib;       //Windows Media Player 사용 위한 참조 추가
-using NAudio;       //NAudio사용 위한 using
 
 namespace HW2_Server_Form
 {
@@ -26,7 +25,7 @@ namespace HW2_Server_Form
         private TcpListener m_Listener = null;
 
         public const int little_buf_size = 1024;
-        private byte[] sendBuffer = new byte[1024 * 1];
+        private byte[] sendBuffer = new byte[1024 * 2];
         private byte[] readBuffer = new byte[1024 * 1];
         private byte[] fileBuffer = new byte[1024 * 1000];
         private bool m_blsClientOn = false;
@@ -55,8 +54,7 @@ namespace HW2_Server_Form
         public MusicList m_musicListClass;
         public ClientRequest m_clientRequestClass
             = new ClientRequest(ClientRequest.RequestType.music_File);
-
-        private NAudio.Wave.Mp3FileReader mp3 = null;
+        
 
         public form_Server()
         {
@@ -215,7 +213,6 @@ namespace HW2_Server_Form
                 }
             }
             else if (destination.Equals("client")) {
-                
                 //내부 파일 확인, .mp3의 확장명이 아니라면 listView에 저장하지 않음
                 foreach (var item in di.GetFiles())
                 {
@@ -253,24 +250,35 @@ namespace HW2_Server_Form
                     //Client Request의 음악 이름이 아닌경우 패스!
                     if (item.Name.Equals(m_clientRequestClass.music_Name + ".mp3"))
                     {
+                        
                         ServerMusic serMusic = new ServerMusic();
                         FolderItem folder_Item = folder.ParseName(item.Name);
+                        
                         //해당 파일의 경로 저장
                         string requestedFile_Path = ( storage_Path + "\\" + item.Name );
-
                         //SendFileData
                         //file 열고 읽어오기
-                        mp3 = new NAudio.Wave.Mp3FileReader(requestedFile_Path);
-                        NAudio.Wave.Mp3Frame frame;
-                        while ((frame = mp3.ReadNextFrame()) != null)
+
+                        fileReader = new FileStream(requestedFile_Path, FileMode.Open, FileAccess.Read);
+
+                        // 패킷 내용을 바일 크기 받는것 추가시키기
+                        int fileLength = (int)fileReader.Length;
+                        int count = fileLength / 1024 + 1;
+                        BinaryReader reader = new BinaryReader(fileReader);
+                        
+                        
+                        for(int i =0; i< count; i++)
                         {
                             serMusic.music_Name = folder.GetDetailsOf(folder_Item, 0);//노래이름
-                            //save file buffer and send that
-                            serMusic.buffer = frame.RawData;
+                            serMusic.Length = fileLength;
+                            serMusic.buffer = reader.ReadBytes(1024);
                             ServerMusic.Serialize(serMusic, sendBuffer.Length).CopyTo(this.sendBuffer, 0);
                             m_NetStream.Write(this.sendBuffer, 0, this.sendBuffer.Length);
                             this.m_NetStream.Flush();
                         }
+
+
+                        
                         //해당 파일의 끝임을 알림
                         EndStream endstream = new EndStream();
                         endstream.Type = (int)PacketType.end_Stream;
@@ -282,7 +290,9 @@ namespace HW2_Server_Form
                         EndStream.Serialize(endstream, sendBuffer.Length).CopyTo(this.sendBuffer, 0);
                         m_NetStream.Write(this.sendBuffer, 0, this.sendBuffer.Length);
                         this.m_NetStream.Flush();
-                        this.mp3.Dispose();
+                        reader.Dispose();
+                        
+
                         /*
                         UInt32 toRead = (UInt32)fileReader.Length;
                         byte[] dataSize = BitConverter.GetBytes(toRead);

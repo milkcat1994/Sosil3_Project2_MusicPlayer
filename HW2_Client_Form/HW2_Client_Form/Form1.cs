@@ -25,7 +25,7 @@ namespace HW2_Client_Form
         private TcpClient m_Client;
         
         private byte[] sendBuffer = new byte[1024 * 1];
-        private byte[] readBuffer = new byte[1024 * 2];
+        private byte[] readBuffer = new byte[1024 * 3];
         private byte[] fileBuffer = new byte[1024 * 1000];
 
         //server와의 연결이 되었는지 확인
@@ -44,8 +44,7 @@ namespace HW2_Client_Form
         public ServerMusic m_serverMusicClass;
         public EndStream m_endStreamClass;
         public BinaryWriter fileWriter;
-
-        private NAudio.Wave.Mp3FileReader mp3 = null;
+        
         //data 길이 저장 위한 변수
         UInt32 dataLength;
 
@@ -130,7 +129,7 @@ namespace HW2_Client_Form
                 try
                 {
                     nRead = 0;
-                    if (!m_NetStream.DataAvailable) { continue; }
+                    if (!m_NetStream.CanRead) { continue; }
                     nRead = this.m_NetStream.Read(this.readBuffer, 0, this.readBuffer.Length);
                     if (nRead <= 0) { continue; }
                 }
@@ -142,7 +141,7 @@ namespace HW2_Client_Form
                 }
 
                 //패킷 타입으로 저장.
-                Packet packet = (Packet)Packet.Deserialize(this.readBuffer,this.readBuffer.Length);
+                Packet packet = (Packet)Packet.Deserialize(this.readBuffer, this.readBuffer.Length);
                 //패킷 타입 분석 이후 패킷 종류에 따라 나눠서 사용함.
                 //10.2_score : 1
                 //Music List를 Server Music List에 추가시켜줌
@@ -161,16 +160,29 @@ namespace HW2_Client_Form
                 else if(packet.Type == (int)PacketType.server_Music || packet.Type == (int)PacketType.end_Stream) {
                         if (packet.Type == (int)PacketType.server_Music)
                         {
-                        this.m_serverMusicClass = (ServerMusic)Packet.Deserialize(this.readBuffer,this.readBuffer.Length);
+                            this.m_serverMusicClass = (ServerMusic)Packet.Deserialize(this.readBuffer,this.readBuffer.Length);
                             string music_Name = m_serverMusicClass.music_Name;
+                            int fileLength = m_serverMusicClass.Length;
+                            int totalLength = 0;
+
                             //open and create storage Path
                             string storage_File = textBox_Storage_Path.Text.ToString() + "\\" + music_Name + ".mp3";
                             storage_File.Replace("\\","\\\\");
-                            FileStream stream = null;
+                            FileStream stream = new FileStream(storage_File, FileMode.Create, FileAccess.Write);
                             //stream = File.Open(storage_File, FileMode.Append);
-                            stream = File.Open(storage_File, FileMode.Append);
+
+                            BinaryWriter writer = new BinaryWriter(stream);
+
+                            while (totalLength < fileLength)
+                            {
+                                this.m_serverMusicClass = (ServerMusic)Packet.Deserialize(this.readBuffer, this.readBuffer.Length);
+                                int receiveLength = readBuffer.Length;
+                                writer.Write(readBuffer, 0, receiveLength);
+                                totalLength += receiveLength;
+                            }
                             stream.Write(m_serverMusicClass.buffer, 0, m_serverMusicClass.buffer.Length);
                             stream.Close();
+                            writer.Close();
                         }
                         //13_1_score : 0.8
                         //해당 파일 전송 완료 패킷을 받고, Play List View에 해당 파일 추가

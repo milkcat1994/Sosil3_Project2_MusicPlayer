@@ -13,4 +13,3 @@ D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.csproj.GenerateResource.Cache
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.exe
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\obj\Debug\HW2_Server_Form.pdb
-D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Server_Form\HW2_Server_Form\bin\Debug\NAudio.dll

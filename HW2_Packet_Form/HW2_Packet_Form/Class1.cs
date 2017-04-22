@@ -31,10 +31,10 @@ namespace HW2_Packet_Form
     [Serializable]
     public class Packet
     {
-        public const int buffer_Size = 1024 * 2;
+        public const int buffer_Size = 1024 * 3;
         public int Length;
         public int Type;
-        public byte[] buffer;
+        public byte[] buffer = null;
 
 
         public Packet()
@@ -42,31 +42,63 @@ namespace HW2_Packet_Form
             this.Length = 0;
             this.Type = 0;
         }
-
+        /*
         //byte단위의 패킷으로 생성.
         public static byte[] Serialize(Object o, int size)
         {
-            MemoryStream ms = new MemoryStream(size);
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(ms, o);
-            return ms.ToArray();
+            using (MemoryStream ms = new MemoryStream(size))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(ms, o);
+                byte[] bytes = ms.ToArray();
+                ms.Flush();
+                return bytes;
+            }
         }
+        */
 
+            public static byte[] Serialize(Object o, int size)
+            {
+                using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+                {
+                    System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter
+                        = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    formatter.Serialize(stream, o);
+
+                    byte[] bytes = stream.ToArray();
+                    stream.Flush();
+
+                    return bytes;
+                }
+            }
+        public static object Deserialize(byte[] binaryObj, int size)
+        {
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(binaryObj))
+            {
+                stream.Position = 0;
+                object desObj = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter().Deserialize(stream);
+                return desObj;
+            }
+        }
+        /*
         //받은 쪽에서 포장된 패킷을 원형으로 되돌리는 함수
         public static Object Deserialize(byte[] bt, int size)
         {
-            MemoryStream ms = new MemoryStream(size);
-            foreach (byte b in bt)
+            using (MemoryStream ms = new MemoryStream(size))
             {
-                ms.WriteByte(b);
-            }
+                foreach (byte b in bt)
+                {
+                    ms.WriteByte(b);
+                }
 
-            ms.Position = 0;
-            BinaryFormatter bf = new BinaryFormatter();
-            Object obj = bf.Deserialize(ms);
-            ms.Close();
+                ms.Position = 0;
+                BinaryFormatter bf = new BinaryFormatter();
+                Object obj = bf.Deserialize(ms);
+                ms.Close();
             return obj;
+            }
         }
+        */
     }
 
     //두개의 타입의 패킷을 만들어 두었음
@@ -134,7 +166,6 @@ namespace HW2_Packet_Form
     {
         //음악 
         public string music_Name;
-
         public ServerMusic()
         {
             this.music_Name = null;

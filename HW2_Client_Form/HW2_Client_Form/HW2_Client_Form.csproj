@@ -52,9 +52,6 @@
     <Reference Include="HW2_Packet_Form">
       <HintPath>..\..\HW2_Packet_Form\HW2_Packet_Form\bin\Debug\HW2_Packet_Form.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio">
-      <HintPath>..\..\NAudio.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
