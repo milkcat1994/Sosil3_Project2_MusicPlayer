@@ -50,6 +50,7 @@
             this.textBox_IP = new System.Windows.Forms.TextBox();
             this.label_IP = new System.Windows.Forms.Label();
             this.groupBox_Play = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.trackBar_Music_Player = new System.Windows.Forms.TrackBar();
@@ -69,7 +70,6 @@
             this.folder_Browser_Dialog = new System.Windows.Forms.FolderBrowserDialog();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.time_TrackBar_Increase = new System.Windows.Forms.Timer(this.components);
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox_Get.SuspendLayout();
             this.panel_Storage_Path.SuspendLayout();
             this.panel_Port.SuspendLayout();
@@ -112,6 +112,7 @@
             this.progressBar_Download.Location = new System.Drawing.Point(8, 149);
             this.progressBar_Download.Name = "progressBar_Download";
             this.progressBar_Download.Size = new System.Drawing.Size(389, 23);
+            this.progressBar_Download.Step = 1;
             this.progressBar_Download.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar_Download.TabIndex = 11;
             // 
@@ -279,6 +280,15 @@
             this.groupBox_Play.TabStop = false;
             this.groupBox_Play.Text = "Play MP3 File";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(277, 130);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 12);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "label3";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -425,15 +435,6 @@
             // time_TrackBar_Increase
             // 
             this.time_TrackBar_Increase.Tick += new System.EventHandler(this.time_TrackBar_Increase_Tick);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(277, 130);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 12);
-            this.label3.TabIndex = 20;
-            this.label3.Text = "label3";
             // 
             // form_Client
             // 

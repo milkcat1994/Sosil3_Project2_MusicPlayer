@@ -13,7 +13,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-using HW2_Packet_Form;
 using Shell32;      //ShellClass()사용 shell controls 참조 추가
 using WMPLib;       //Windows Media Player 사용 위한 참조 추가
 
@@ -21,20 +20,25 @@ namespace HW2_Server_Form
 {
     public partial class form_Server : Form
     {
-        private NetworkStream m_NetStream = null;
         private TcpListener m_Listener = null;
+        private NetworkStream ns;
+        private StreamReader sr;
+        private StreamWriter sw;
 
         public const int little_buf_size = 1024;
-        private byte[] sendBuffer = new byte[1024 * 2];
+        private byte[] sendBuffer = new byte[1024 * 1];
         private byte[] readBuffer = new byte[1024 * 1];
         private byte[] fileBuffer = new byte[1024 * 1000];
+        byte[] buffer = new byte[256];
+        private string dataType;
         private bool m_blsClientOn = false;
 
         private Thread m_Thread = null;
         private Thread f_Thread = null;
 
         //Client, IP, Port
-        Socket Client = null;
+        Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        IPEndPoint point;
         private String WanIP;
         int port;
 
@@ -48,19 +52,13 @@ namespace HW2_Server_Form
         //file Read위한 변수
         FileStream fileReader;
         Stream output;
-
-        public Initialize m_InitializeClass;
-        public Login m_LoginClass;
-        public MusicList m_musicListClass;
-        public ClientRequest m_clientRequestClass
-            = new ClientRequest(ClientRequest.RequestType.music_File);
         
 
         public form_Server()
         {
             InitializeComponent();
         }
-
+        /*
         //Packet Send Function
         public void Send()
         {
@@ -72,6 +70,7 @@ namespace HW2_Server_Form
                 this.sendBuffer[i] = 0;
             }
         }
+        */
 
         public string Get_My_IP_Wan()
         {
@@ -93,8 +92,8 @@ namespace HW2_Server_Form
         {
             //Get_My_IP_Wan을 Form_Load를 통해 사용하여 ip주소값 저장, Listener실행
             IPAddress ip = IPAddress.Parse(WanIP);
-            this.m_Listener = new TcpListener(ip, port);
-            this.m_Listener.Start();
+            //this.m_Listener = new TcpListener(ip, port);
+            //this.m_Listener.Start();
 
             //7.1_score : 0.3
             //클라이언트가 없다면 text 출력
@@ -103,60 +102,65 @@ namespace HW2_Server_Form
 
             while (true)
             {
+                point = new IPEndPoint(ip, port);
+                Client.Bind(point);
+                //소켓 대기상태
+                Client.Listen(1);
+                Client = Client.Accept();
                 //클라이언트의 접속을 기다려 접속시 Client 소켓 정보 초기화
-                Client = this.m_Listener.AcceptSocket();
+                //Client = this.m_Listener.AcceptSocket();
 
                 //클라이언트 접속시 실행
                 if (Client.Connected)
                 {
+                    ns = new NetworkStream(Client);
+                    sr = new StreamReader(ns);
+                    sw = new StreamWriter(ns);
+
                     this.m_blsClientOn = true;
-                    this.m_NetStream = new NetworkStream(Client);
                     this.textBox_Music_Log.AppendText("Client Access!!!\n");
 
                     //8.1_score : 0.3
                     //접속시 등록된 Music List를 전송
                     get_File_Name("client");
-                }
+                    this.textBox_Music_Log.AppendText
+                        ("send all success\n");
 
-                int nRead = 0;
+                }
 
                 while (this.m_blsClientOn)
                 {
                     try
                     {
-                        nRead = 0;                        
-                        if (!m_NetStream.DataAvailable) { continue; } 
-                        nRead = this.m_NetStream.Read(this.readBuffer, 0, this.readBuffer.Length);
-                        if (nRead <= 0) continue;
+                        //파일의 타입을 맨 처음 전송 받음
+                        dataType = sr.ReadLine();
+                        this.textBox_Music_Log.AppendText
+                            ("Server dataType : " + dataType + "\n");
+                        //Client.Receive(buffer);
+                        //                        dataType = BitConverter.ToString(buffer);
                     }
                     catch
                     {
                         this.m_blsClientOn = false;
-                        this.m_NetStream = null;
                         return;
                     }
 
-                    //패킷 타입으로 저장.
-                    Packet packet = (Packet)Packet.Deserialize(this.readBuffer, readBuffer.Length);
 
                     //패킷 타입 분석 이후 패킷 종류에 따라 나눠서 사용함.
-                    switch ((int)packet.Type)
+                    if (dataType.Equals("List"))
                     {
-                        case (int)PacketType.리스트:
-                            {
-                                this.m_musicListClass = (MusicList)Packet.Deserialize(this.readBuffer, readBuffer.Length);
-                                this.textBox_Music_Log.AppendText("패킷 전송 성공. Initialize Class Data is" + this.m_InitializeClass.Data + "\n");
-                                break;
-                            }
+
+                    }
+                    else if (dataType.Equals("Client_Request"))
+                    {
                         //8.2_score : 1
-                        case (int)PacketType.client_Request:
-                            {
-                                this.m_clientRequestClass = (ClientRequest)Packet.Deserialize(this.readBuffer, readBuffer.Length);
-                                this.sendMp3FiletoClient(m_clientRequestClass.music_Name);
-                                break;
-                            }
-                        default:
-                            break;
+                        //클라요청은 음악 이름을 받음
+                        //                        Client.Receive(buffer);
+                        //                       this.sendMp3FiletoClient(BitConverter.ToString(buffer));
+                        //뮤직 이름 전송 위한 수신
+                        string tempString = sr.ReadLine();
+                        //MessageBox.Show("Server : get musicName");
+                        this.sendMp3FiletoClient(tempString);
                     }
                 }
             }
@@ -165,7 +169,7 @@ namespace HW2_Server_Form
 
         private void button_Server_Start_Click(object sender, EventArgs e)
         {
-            if(button_Server_Start.Text == "Stop")
+            if(button_Server_Start.Text.Equals("Stop"))
             {
                 object a=null;
                 FormClosedEventArgs fce = null;
@@ -212,25 +216,47 @@ namespace HW2_Server_Form
                     }
                 }
             }
-            else if (destination.Equals("client")) {
+            else if (destination.Equals("client"))
+            {
+                String tempString;
+//                Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));
                 //내부 파일 확인, .mp3의 확장명이 아니라면 listView에 저장하지 않음
                 foreach (var item in di.GetFiles())
                 {
                     if (item.Extension.Equals(".mp3"))
                     {
+                        /*
                         //MessageBox.Show("Server : Make MusicList");
-                        MusicList musicL = new MusicList();
                         FolderItem folder_Item = folder.ParseName(item.Name);
-                        musicL.music_Name = folder.GetDetailsOf(folder_Item, 0);//노래이름
-                        musicL.music_Singer = folder.GetDetailsOf(folder_Item, 20);//가수
-                        musicL.music_Play_Time = folder.GetDetailsOf(folder_Item, 27);//Play Time
-                        musicL.music_Bit_Rate = folder.GetDetailsOf(folder_Item, 28);//Bit Rate
+                        tempString = folder.GetDetailsOf(folder_Item, 0);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//노래이름
+                        tempString = folder.GetDetailsOf(folder_Item, 20);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//가수
+                        tempString = folder.GetDetailsOf(folder_Item, 27);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//Play Time
+                        tempString = folder.GetDetailsOf(folder_Item, 28);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//Bit Rate
+                        */
+
+                        tempString = "List";
+                        //파일 타입이 List임을 전송
+                        sw.WriteLine(tempString);
+
+                        FolderItem folder_Item = folder.ParseName(item.Name);
+                        tempString = folder.GetDetailsOf(folder_Item, 0);
+                        sw.WriteLine(tempString);//노래이름
+                        tempString = folder.GetDetailsOf(folder_Item, 20);
+                        sw.WriteLine(tempString);//가수
+                        tempString = folder.GetDetailsOf(folder_Item, 27);
+                        sw.WriteLine(tempString);//Play Time
+                        tempString = folder.GetDetailsOf(folder_Item, 28);
+                        sw.WriteLine(tempString); ;//Bit Rate
+                        sw.Flush();
                         //serialize
                         //MessageBox.Show("Server : pre Serialize");
-                        MusicList.Serialize(musicL, sendBuffer.Length).CopyTo(sendBuffer, 0);
-                        this.m_NetStream.Write(this.sendBuffer, 0, this.sendBuffer.Length);
-                        this.m_NetStream.Flush();
-                        this.textBox_Music_Log.AppendText("Send Success Music Name : " + musicL.music_Name +"\n");
+                        // MusicList.Serialize(musicL, sendBuffer.Length).CopyTo(sendBuffer, 0);
+
+                        this.textBox_Music_Log.AppendText("Send Success Music Name : " + folder.GetDetailsOf(folder_Item, 0) +"\n");
                         //this.send()
                     }
                 }
@@ -248,10 +274,14 @@ namespace HW2_Server_Form
                 if (item.Extension.Equals(".mp3"))
                 {
                     //Client Request의 음악 이름이 아닌경우 패스!
-                    if (item.Name.Equals(m_clientRequestClass.music_Name + ".mp3"))
+                    if (item.Name.Equals(fileName + ".mp3"))
                     {
-                        
-                        ServerMusic serMusic = new ServerMusic();
+                        String tempString;
+                        tempString = "Music_File";
+                        sw.WriteLine(tempString);
+                        //파일 타입 전송
+//                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));
+
                         FolderItem folder_Item = folder.ParseName(item.Name);
                         
                         //해당 파일의 경로 저장
@@ -263,22 +293,50 @@ namespace HW2_Server_Form
 
                         // 패킷 내용을 바일 크기 받는것 추가시키기
                         int fileLength = (int)fileReader.Length;
+                        //파일 보낼 횟수
                         int count = fileLength / 1024 + 1;
+                        //파일 읽기 위한 BinaryReader 객체 생성
                         BinaryReader reader = new BinaryReader(fileReader);
-                        
-                        
-                        for(int i =0; i< count; i++)
+                        //파일 크기 전송 위해 바이트 배열로 전환
+                        buffer = BitConverter.GetBytes(fileLength);
+                        sw.WriteLine(fileLength);
+                        /*
+                        //파일 크기 전송
+                        Client.Send(buffer);
+                        //파일 정보 전송
+                        tempString = folder.GetDetailsOf(folder_Item, 0);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//노래이름
+                        tempString = folder.GetDetailsOf(folder_Item, 20);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//가수
+                        tempString = folder.GetDetailsOf(folder_Item, 27);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//Play Time
+                        tempString = folder.GetDetailsOf(folder_Item, 28);
+                        Client.Send(System.Text.Encoding.UTF8.GetBytes(tempString));//Bit Rate
+                        */
+
+                        tempString = folder.GetDetailsOf(folder_Item, 0);
+                        sw.WriteLine(tempString);//노래이름
+                        tempString = folder.GetDetailsOf(folder_Item, 20);
+                        sw.WriteLine(tempString);//가수
+                        tempString = folder.GetDetailsOf(folder_Item, 27);
+                        sw.WriteLine(tempString);//Play Time
+                        tempString = folder.GetDetailsOf(folder_Item, 28);
+                        sw.WriteLine(tempString); ;//Bit Rate
+                        sw.Flush();
+
+                        //MessageBox.Show("server 전송 시작");
+                        for (int i =0; i< count; i++)
                         {
-                            serMusic.music_Name = folder.GetDetailsOf(folder_Item, 0);//노래이름
-                            serMusic.Length = fileLength;
-                            serMusic.buffer = reader.ReadBytes(1024);
-                            ServerMusic.Serialize(serMusic, sendBuffer.Length).CopyTo(this.sendBuffer, 0);
-                            m_NetStream.Write(this.sendBuffer, 0, this.sendBuffer.Length);
-                            this.m_NetStream.Flush();
+                            sendBuffer = reader.ReadBytes(1024);
+                            //읽은 길이만큼 클라로 전송
+                            Client.Send(sendBuffer);
                         }
+                        fileReader.Close();
+                        reader.Close();
 
+                        MessageBox.Show("server 전송 완료");
 
-                        
+                        /*
                         //해당 파일의 끝임을 알림
                         EndStream endstream = new EndStream();
                         endstream.Type = (int)PacketType.end_Stream;
@@ -291,7 +349,7 @@ namespace HW2_Server_Form
                         m_NetStream.Write(this.sendBuffer, 0, this.sendBuffer.Length);
                         this.m_NetStream.Flush();
                         reader.Dispose();
-                        
+                        */
 
                         /*
                         UInt32 toRead = (UInt32)fileReader.Length;
@@ -321,13 +379,13 @@ namespace HW2_Server_Form
                         //여기까지가 본코드
                         //server쪽 listView에 위에서 저장된 정보 저장
                         */
-                        MessageBox.Show("server 전송 완료");
                         return;
                     }
                 }
             }
         }
 
+        /*
         public int WriteFileToStream(UInt32 fileSizeInBytes)
         {
             int done = fileReader.Read(this.fileBuffer, 0, this.fileBuffer.Length);
@@ -335,6 +393,7 @@ namespace HW2_Server_Form
             this.m_NetStream.Flush();
             return done;
         }
+        */
 
         private void button_Find_Path_Click(object sender, EventArgs e)
         {
@@ -368,10 +427,10 @@ namespace HW2_Server_Form
             //해당 값들에 대해 널값이 아닌경우에만 실행하여 exit실행
             if (this.m_Listener != null)
                 this.m_Listener.Stop();
-            if (this.m_NetStream != null)
-                this.m_NetStream.Close();
             if (this.m_Thread != null)
                 this.m_Thread.Abort();
+            if (this.ns != null)
+                this.ns.Close();
             if (this.fileReader != null)
                 this.fileReader.Close();
         }
