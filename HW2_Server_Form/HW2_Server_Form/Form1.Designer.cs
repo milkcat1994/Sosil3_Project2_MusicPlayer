@@ -79,6 +79,7 @@
             // 
             // textBox_Music_Log
             // 
+            this.textBox_Music_Log.Enabled = false;
             this.textBox_Music_Log.Location = new System.Drawing.Point(0, 0);
             this.textBox_Music_Log.Multiline = true;
             this.textBox_Music_Log.Name = "textBox_Music_Log";
