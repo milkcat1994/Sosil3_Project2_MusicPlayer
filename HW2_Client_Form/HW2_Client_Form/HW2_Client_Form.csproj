@@ -131,6 +131,15 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Prev.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Next.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
