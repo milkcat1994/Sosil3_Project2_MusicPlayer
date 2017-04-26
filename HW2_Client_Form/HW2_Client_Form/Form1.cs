@@ -54,6 +54,8 @@ namespace HW2_Client_Form
         int curPosition = 0;        //current trackBar_Value
         double curFile_Duration = 0;//current file whole time
         int flag=3;  //Play Option_ Default : one cycle List
+        int arrList_Count = 0;      //current PlayList Count
+        int tempExTrackValue = 0;   //save to Ex TrackValue
 
         public form_Client()
         {
@@ -94,17 +96,17 @@ namespace HW2_Client_Form
                 MessageBox.Show("IP 혹은 Port Number가 설정되지 않았습니다.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }//연결이 오류일 경우
-            catch (SocketException se)
-            {
-                MessageBox.Show("socketException");
-                return;
             }//Server가 없을 경우
-            catch (ArgumentNullException ane)
+            catch (SocketException se)
             {
                 //9.2_score : 0.1
                 //Server가 Start되지 않은 경우
-                MessageBox.Show("Can not Connection...");
+                MessageBox.Show("socketException");
+                return;
+            }//인자가 없는경우
+            catch (ArgumentNullException ane)
+            {
+                MessageBox.Show(ane.ToString() + " occure");
                 return;
             }
             //연결 완료시 true로 변경
@@ -120,7 +122,6 @@ namespace HW2_Client_Form
             this.m_Thread.Start();
         }
 
-        //10.1_score : 0.3
         //서버가 전송한 Music_File_List 받아서 Client쪽 ListView에 보여주기
         public void receive_Thread()
         {
@@ -136,7 +137,7 @@ namespace HW2_Client_Form
                     return;
                 }
                 
-                //패킷 타입 분석 이후 패킷 종류에 따라 나눠서 사용함.
+                //10.1_score : 0.3
                 //10.2_score : 1
                 //Music List를 Server Music List에 추가시켜줌
                 if (dataType.Equals("List"))
@@ -159,7 +160,7 @@ namespace HW2_Client_Form
                     this.listView_Server_Music_List.Items.Add(lv_Item);
                 }
                 //서버로 부터 파일을 전송받아 해당 경로에 파일 생성
-                //12_1_score : 1
+                //12.1_score : 1
                 else if(dataType.Equals("Music_File")) {
 
                     //파일 크기 수신
@@ -197,9 +198,9 @@ namespace HW2_Client_Form
                     }
                     stream.Close();
                     writer.Close();
-                    //13_1_score : 0.8
 
-                    //해당 파일 전송 완료 패킷을 받고, Play List View에 해당 파일 추가
+                    //13.1_score : 0.8
+                    //Play List View에 해당 파일 추가
                     this.listView_Play_List.Items.Add(lv_Item);
 
                     //array List 에 받은 데이터 삽입
@@ -248,7 +249,6 @@ namespace HW2_Client_Form
             }
             //이후는 receive_Thread에 의해 계속 리시브를 받고있음
         }
-
 
         //17.1_score : 1
         private void button_File_UpLoad_Click(object sender, EventArgs e)
@@ -374,7 +374,8 @@ namespace HW2_Client_Form
                 //재생 목록에 추가
                 PlayList.appendItem(media);
             }
-            
+            arrList_Count = player_ArrList.Count;
+
             string music_name_1 = listView_Play_List.FocusedItem.SubItems[0].Text;
             //arrlist내 해당 파일 index가져오기
             int arrList_index_2 = player_ArrList.IndexOf(music_name_1);
@@ -401,19 +402,32 @@ namespace HW2_Client_Form
             time_TrackBar_Increase.Start();
         }
         
+        //18_추가구현
         private void button_Music_Stop_Click(object sender, EventArgs e)
         {
             //WMP Player stop
-            WMP.controls.stop();
+            try
+            {
+                WMP.controls.stop();
+            }
+            catch
+            {
+                return;
+            }
             //Stop timer
             time_TrackBar_Increase.Stop();
             //TrackBar Value set 0
             trackBar_Music_Player.Value = 0;
             //Change button to Play
             button_Music_Play.ImageIndex = 0;
+            //Set Default
+            tempExTrackValue = 0;
             //Set default Time
             label_time.Text = "00:00";
             label_Music_Name.Text = "선택된 곡이 없습니다.";
+            //WMP객체 초기화 하여 다시 Player List에 있는 것 받을 수 있도록 구현
+            WMP = null;
+            currentPlayindex = 1;
         }
 
         //16.1_score : 0.3
@@ -425,14 +439,37 @@ namespace HW2_Client_Form
                 string music_name = listView_Play_List.FocusedItem.SubItems[0].Text;
                 //arrlist내 해당 파일 index가져오기
                 int arrList_index = player_ArrList.IndexOf(music_name);
+                //16.2_score : 0.1
                 //현재 재생 index와 list내 index 동일시 오류 메시지 출력
                 if (arrList_index+1 == currentPlayindex)
                 {
                     MessageBox.Show("현재 재생중인 곡은 삭제할 수 없습니다.");
                     return;
                 }
+                //if delete target item isn't current Play List
+                else if (arrList_index + 1 > arrList_Count)
+                {
+                    listView_Play_List.FocusedItem.Remove();
+                    player_ArrList.Remove(music_name);
+                    return;
+                }
+
+                //remove item in currentPlaylist
+                IWMPMedia mediaForDel = WMP.currentPlaylist.Item[arrList_index];
+                WMP.currentPlaylist.removeItem(mediaForDel);
+
+                //remove item before currentPlayindex
+                if(arrList_index+1 < currentPlayindex)
+                {
+                    currentPlayindex -= 1;
+                }
+
+                //delete item in ListView, ArrList
                 listView_Play_List.FocusedItem.Remove();
                 player_ArrList.Remove(music_name);
+                
+                //reSave ArrList Count
+                arrList_Count = player_ArrList.Count;
             }
         }
 
@@ -446,10 +483,18 @@ namespace HW2_Client_Form
                 MessageBox.Show("리스트의 첫곡입니다.");
                 return;
             }
+            tempExTrackValue = 0;
             currentPlayindex -= 1;
-            WMP.controls.stop();
-            WMP.controls.previous();
-            WMP.controls.play();
+            try
+            {
+                WMP.controls.stop();
+                WMP.controls.previous();
+                WMP.controls.play();
+            }
+            catch
+            {
+                return;
+            }
             //14.1_score : 0.1
             label_Music_Name.Text = WMP.controls.currentItem.name;
         }
@@ -459,7 +504,7 @@ namespace HW2_Client_Form
         private void button_Next_Music_Click(object sender, EventArgs e)
         {
             //Save Size PlayList
-            int temCount = player_ArrList.Count;
+            int temCount = arrList_Count;
 
             //17.2_score : 0.5*3
             //check flag_ Play Option
@@ -470,7 +515,6 @@ namespace HW2_Client_Form
                 case 2:
                     //Decrease Play List index to Selected index
                     //play First Music
-                    MessageBox.Show("currentindex:"+currentPlayindex.ToString() + "\ntemCount:"+temCount);
                     if (currentPlayindex == temCount)
                     {
                         while (1 < currentPlayindex)
@@ -493,20 +537,30 @@ namespace HW2_Client_Form
                 MessageBox.Show("리스트의 마지막곡입니다.");
                 return;
             }
+            tempExTrackValue = 0;
             currentPlayindex += 1;
-            WMP.controls.stop();
-            WMP.controls.next();
-            WMP.controls.play();
+            try
+            {
+                WMP.controls.stop();
+                WMP.controls.next();
+                WMP.controls.play();
+            }
+            catch
+            {
+                return;
+            }
             //14.1_score : 0.1
             label_Music_Name.Text = WMP.controls.currentItem.name;
         }
 
+        //TrackBar Scroll Event Handler
         private void trackBar_Music_Player_Scroll(object sender, EventArgs e)
         {
             curPosition = trackBar_Music_Player.Value;
             WMP.controls.currentPosition = (double)curPosition * (curFile_Duration/(double)400);
             trackBar_Music_Player.Value =
                 (int)(WMP.controls.currentPosition * ((double)400 / curFile_Duration));
+            tempExTrackValue = 0;
         }
 
         //17.2_score : 0.5*3
@@ -563,7 +617,8 @@ namespace HW2_Client_Form
             if (curFile_Duration == 0) return;
             time_TrackBar_Increase.Interval =
                 (int)((double)1000 * (WMP.currentMedia.duration / (double)trackBar_Music_Player.Maximum));
-
+            label1.Text = currentPlayindex.ToString();
+            label2.Text = arrList_Count.ToString();
             //Print Current Time Value
             int currentPlaytime = (int)WMP.controls.currentPosition;
             int minute = currentPlaytime / 60;
@@ -573,14 +628,14 @@ namespace HW2_Client_Form
             //PlayList.get_Item(0);
             trackBar_Music_Player.Value = 
                 (int)(WMP.controls.currentPosition * ((double)trackBar_Music_Player.Maximum / curFile_Duration));
+
+            //save Track.Value
+            int tempTrackvalue = trackBar_Music_Player.Value;
+
             //노래가 거의 끝나갈쯤 현재 플레이 index 증가
-            if (trackBar_Music_Player.Value == trackBar_Music_Player.Maximum-1)
+            //For Check Music's End
+            if (tempExTrackValue > trackBar_Music_Player.Value)
             {
-                if (currentPlayindex > player_ArrList.Count)
-                    return;
-                //plus current play index 
-                if(currentPlayindex < player_ArrList.Count)
-                    currentPlayindex += 1;
                 //17.2_score : 0.5*3
                 //check flag_ Play Option
                 switch (flag)
@@ -588,29 +643,57 @@ namespace HW2_Client_Form
                     case 1:
                         WMP.controls.stop();
                         WMP.controls.previous();
-                        WMP.controls.next();
                         WMP.controls.play();
                         break;
                     case 2:
                         //Decrease Play List index to Selected index
                         //play First Music
-                        if (1< currentPlayindex)
-                            WMP.controls.stop();
-                        while (1 < currentPlayindex)
+                        if (currentPlayindex == arrList_Count)
                         {
-                            currentPlayindex -= 1;
-                            WMP.controls.previous();
+                            if (1 < currentPlayindex)
+                                WMP.controls.stop();
+                            while (1 <= currentPlayindex)
+                            {
+                                currentPlayindex -= 1;
+                                WMP.controls.previous();
+                            }
+                            WMP.controls.play();
+                            return;
                         }
-                        WMP.controls.play();
+                        else
+                        {
+                            currentPlayindex += 1;
+                        }
                         break;
                     case 3:
-                        if (currentPlayindex == player_ArrList.Count) {
+                        //if current index play list end
+                        if (currentPlayindex == arrList_Count) {
+                            WMP.controls.stop();
+                            //Stop timer
+                            time_TrackBar_Increase.Stop();
+                            //TrackBar Value set 0
+                            trackBar_Music_Player.Value = 0;
+                            //Change button to Play
                             button_Music_Play.ImageIndex = 0;
+                            //Set Default
+                            tempExTrackValue = 0;
+                            //Set default Time
+                            label_time.Text = "00:00";
+                            label_Music_Name.Text = "선택된 곡이 없습니다.";
+                            //WMP객체 초기화 하여 다시 Player List에 있는 것 받을 수 있도록 구현
+                            WMP = null;
+                            currentPlayindex = 1;
+                            return;
+                        }
+                        else
+                        {
+                            currentPlayindex += 1;
                         }
                         break;
                 }
             }
-
+            //save Ex_TrackValue
+            tempExTrackValue = trackBar_Music_Player.Value;
 
             //14.1_score : 0.1
             //현재 목록을 계속 보며 노래 이름 띄우는 라벨 수정

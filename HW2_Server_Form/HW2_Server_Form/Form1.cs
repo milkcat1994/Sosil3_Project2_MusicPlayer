@@ -146,6 +146,7 @@ namespace HW2_Server_Form
 
         private void button_Server_Start_Click(object sender, EventArgs e)
         {
+            //18_추가구현
             if(button_Server_Start.Text.Equals("Stop"))
             {
                 Client.Close();
@@ -158,6 +159,7 @@ namespace HW2_Server_Form
                 MessageBox.Show("경로가 선택되지 않았습니다. 경로를 다시 지정하십시오.","Error", MessageBoxButtons.OK
                     , MessageBoxIcon.Error);
             }
+            //18_추가구현
             else if (button_Server_Start.Text.Equals("Start"))
             {
                 //Socket 변수 초기화
@@ -205,7 +207,9 @@ namespace HW2_Server_Form
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     textBox_Storage_Path.Text = "";
                 }
-            }//Client에게 서버 경로내의 mp3파일 모두 전송
+            }
+            //8.1_score : 0.3
+            //Client에게 서버 경로내의 mp3파일 모두 전송
             else if (destination.Equals("client"))
             {
                 String tempString;
@@ -325,9 +329,11 @@ namespace HW2_Server_Form
             lv_Item.SubItems.Add(bit_Rate);
 
             //Open and create storage Path
-            string storage_File = textBox_Storage_Path.Text.ToString() + "\\" + music_Name + ".mp3";
+            string storage_File 
+                = textBox_Storage_Path.Text.ToString() + "\\" + music_Name + ".mp3";
             storage_File.Replace("\\","\\\\");
-            FileStream stream = new FileStream(storage_File, FileMode.Create, FileAccess.Write);
+            FileStream stream 
+                = new FileStream(storage_File, FileMode.Create, FileAccess.Write);
 
             BinaryWriter writer = new BinaryWriter(stream);
             while (totalLength < fileLength)

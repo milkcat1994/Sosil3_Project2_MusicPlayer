@@ -56,10 +56,13 @@
             this.radioButton_Option_List_One = new System.Windows.Forms.RadioButton();
             this.radioButton_Option_one = new System.Windows.Forms.RadioButton();
             this.radioButton_Option_List = new System.Windows.Forms.RadioButton();
-            this.panel_Music_Name = new System.Windows.Forms.Panel();
             this.label_Music_Name = new System.Windows.Forms.Label();
             this.label_time = new System.Windows.Forms.Label();
             this.trackBar_Music_Player = new System.Windows.Forms.TrackBar();
+            this.button_Previous_Music = new System.Windows.Forms.Button();
+            this.button_Next_Music = new System.Windows.Forms.Button();
+            this.button_Music_Stop = new System.Windows.Forms.Button();
+            this.button_Music_Play = new System.Windows.Forms.Button();
             this.imageList_Play_Pause = new System.Windows.Forms.ImageList(this.components);
             this.button_Remove_PlayList = new System.Windows.Forms.Button();
             this.label_Play_List = new System.Windows.Forms.Label();
@@ -71,18 +74,15 @@
             this.folder_Browser_Dialog = new System.Windows.Forms.FolderBrowserDialog();
             this.time_TrackBar_Increase = new System.Windows.Forms.Timer(this.components);
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
-            this.button_Previous_Music = new System.Windows.Forms.Button();
-            this.button_Next_Music = new System.Windows.Forms.Button();
-            this.button_Music_Stop = new System.Windows.Forms.Button();
-            this.button_Music_Play = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox_Get.SuspendLayout();
             this.panel_Storage_Path.SuspendLayout();
             this.panel_Port.SuspendLayout();
             this.panel_IP.SuspendLayout();
             this.groupBox_Play.SuspendLayout();
             this.groupBox_Play_Option.SuspendLayout();
-            this.panel_Music_Name.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Music_Player)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -279,8 +279,10 @@
             // 
             // groupBox_Play
             // 
+            this.groupBox_Play.Controls.Add(this.label2);
+            this.groupBox_Play.Controls.Add(this.label1);
+            this.groupBox_Play.Controls.Add(this.label_Music_Name);
             this.groupBox_Play.Controls.Add(this.groupBox_Play_Option);
-            this.groupBox_Play.Controls.Add(this.panel_Music_Name);
             this.groupBox_Play.Controls.Add(this.label_time);
             this.groupBox_Play.Controls.Add(this.trackBar_Music_Player);
             this.groupBox_Play.Controls.Add(this.button_Previous_Music);
@@ -345,21 +347,13 @@
             this.radioButton_Option_List.UseVisualStyleBackColor = true;
             this.radioButton_Option_List.CheckedChanged += new System.EventHandler(this.radioButton_Option_CheckedChanged);
             // 
-            // panel_Music_Name
-            // 
-            this.panel_Music_Name.Controls.Add(this.label_Music_Name);
-            this.panel_Music_Name.Location = new System.Drawing.Point(25, 13);
-            this.panel_Music_Name.Name = "panel_Music_Name";
-            this.panel_Music_Name.Size = new System.Drawing.Size(291, 27);
-            this.panel_Music_Name.TabIndex = 21;
-            // 
             // label_Music_Name
             // 
             this.label_Music_Name.AutoEllipsis = true;
-            this.label_Music_Name.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label_Music_Name.Location = new System.Drawing.Point(0, 0);
+            this.label_Music_Name.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label_Music_Name.Location = new System.Drawing.Point(14, 17);
             this.label_Music_Name.Name = "label_Music_Name";
-            this.label_Music_Name.Size = new System.Drawing.Size(291, 27);
+            this.label_Music_Name.Size = new System.Drawing.Size(307, 36);
             this.label_Music_Name.TabIndex = 0;
             this.label_Music_Name.Text = "선택된 곡이 없습니다";
             this.label_Music_Name.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -376,13 +370,54 @@
             // trackBar_Music_Player
             // 
             this.trackBar_Music_Player.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBar_Music_Player.Location = new System.Drawing.Point(25, 46);
+            this.trackBar_Music_Player.Location = new System.Drawing.Point(25, 56);
             this.trackBar_Music_Player.Maximum = 400;
             this.trackBar_Music_Player.Name = "trackBar_Music_Player";
-            this.trackBar_Music_Player.Size = new System.Drawing.Size(357, 45);
+            this.trackBar_Music_Player.Size = new System.Drawing.Size(359, 45);
             this.trackBar_Music_Player.TabIndex = 17;
             this.trackBar_Music_Player.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar_Music_Player.Scroll += new System.EventHandler(this.trackBar_Music_Player_Scroll);
+            // 
+            // button_Previous_Music
+            // 
+            this.button_Previous_Music.Image = global::HW2_Client_Form.Properties.Resources.Prev;
+            this.button_Previous_Music.Location = new System.Drawing.Point(25, 107);
+            this.button_Previous_Music.Name = "button_Previous_Music";
+            this.button_Previous_Music.Size = new System.Drawing.Size(70, 60);
+            this.button_Previous_Music.TabIndex = 16;
+            this.button_Previous_Music.UseVisualStyleBackColor = true;
+            this.button_Previous_Music.Click += new System.EventHandler(this.button_Previous_Music_Click);
+            // 
+            // button_Next_Music
+            // 
+            this.button_Next_Music.Image = global::HW2_Client_Form.Properties.Resources.Next;
+            this.button_Next_Music.Location = new System.Drawing.Point(314, 107);
+            this.button_Next_Music.Name = "button_Next_Music";
+            this.button_Next_Music.Size = new System.Drawing.Size(70, 60);
+            this.button_Next_Music.TabIndex = 15;
+            this.button_Next_Music.UseVisualStyleBackColor = true;
+            this.button_Next_Music.Click += new System.EventHandler(this.button_Next_Music_Click);
+            // 
+            // button_Music_Stop
+            // 
+            this.button_Music_Stop.Image = global::HW2_Client_Form.Properties.Resources.Stop;
+            this.button_Music_Stop.Location = new System.Drawing.Point(218, 107);
+            this.button_Music_Stop.Name = "button_Music_Stop";
+            this.button_Music_Stop.Size = new System.Drawing.Size(70, 60);
+            this.button_Music_Stop.TabIndex = 14;
+            this.button_Music_Stop.UseVisualStyleBackColor = true;
+            this.button_Music_Stop.Click += new System.EventHandler(this.button_Music_Stop_Click);
+            // 
+            // button_Music_Play
+            // 
+            this.button_Music_Play.ImageIndex = 0;
+            this.button_Music_Play.ImageList = this.imageList_Play_Pause;
+            this.button_Music_Play.Location = new System.Drawing.Point(124, 107);
+            this.button_Music_Play.Name = "button_Music_Play";
+            this.button_Music_Play.Size = new System.Drawing.Size(70, 60);
+            this.button_Music_Play.TabIndex = 12;
+            this.button_Music_Play.UseVisualStyleBackColor = true;
+            this.button_Music_Play.Click += new System.EventHandler(this.button_Music_Play_Click);
             // 
             // imageList_Play_Pause
             // 
@@ -427,6 +462,7 @@
             // play_Music_Name
             // 
             this.play_Music_Name.Text = "Music Name";
+            this.play_Music_Name.Width = 106;
             // 
             // play_Artist
             // 
@@ -453,46 +489,23 @@
             // 
             this.open_File_Dialog.FileName = "openFileDialog1";
             // 
-            // button_Previous_Music
+            // label1
             // 
-            this.button_Previous_Music.Image = global::HW2_Client_Form.Properties.Resources.Prev;
-            this.button_Previous_Music.Location = new System.Drawing.Point(25, 97);
-            this.button_Previous_Music.Name = "button_Previous_Music";
-            this.button_Previous_Music.Size = new System.Drawing.Size(70, 60);
-            this.button_Previous_Music.TabIndex = 16;
-            this.button_Previous_Music.UseVisualStyleBackColor = true;
-            this.button_Previous_Music.Click += new System.EventHandler(this.button_Previous_Music_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(87, 233);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 12);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Play List";
             // 
-            // button_Next_Music
+            // label2
             // 
-            this.button_Next_Music.Image = global::HW2_Client_Form.Properties.Resources.Next;
-            this.button_Next_Music.Location = new System.Drawing.Point(312, 97);
-            this.button_Next_Music.Name = "button_Next_Music";
-            this.button_Next_Music.Size = new System.Drawing.Size(70, 60);
-            this.button_Next_Music.TabIndex = 15;
-            this.button_Next_Music.UseVisualStyleBackColor = true;
-            this.button_Next_Music.Click += new System.EventHandler(this.button_Next_Music_Click);
-            // 
-            // button_Music_Stop
-            // 
-            this.button_Music_Stop.Image = global::HW2_Client_Form.Properties.Resources.Stop;
-            this.button_Music_Stop.Location = new System.Drawing.Point(217, 97);
-            this.button_Music_Stop.Name = "button_Music_Stop";
-            this.button_Music_Stop.Size = new System.Drawing.Size(70, 60);
-            this.button_Music_Stop.TabIndex = 14;
-            this.button_Music_Stop.UseVisualStyleBackColor = true;
-            this.button_Music_Stop.Click += new System.EventHandler(this.button_Music_Stop_Click);
-            // 
-            // button_Music_Play
-            // 
-            this.button_Music_Play.ImageIndex = 0;
-            this.button_Music_Play.ImageList = this.imageList_Play_Pause;
-            this.button_Music_Play.Location = new System.Drawing.Point(119, 97);
-            this.button_Music_Play.Name = "button_Music_Play";
-            this.button_Music_Play.Size = new System.Drawing.Size(70, 60);
-            this.button_Music_Play.TabIndex = 12;
-            this.button_Music_Play.UseVisualStyleBackColor = true;
-            this.button_Music_Play.Click += new System.EventHandler(this.button_Music_Play_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(187, 238);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 12);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "Play List";
             // 
             // form_Client
             // 
@@ -517,7 +530,6 @@
             this.groupBox_Play.PerformLayout();
             this.groupBox_Play_Option.ResumeLayout(false);
             this.groupBox_Play_Option.PerformLayout();
-            this.panel_Music_Name.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Music_Player)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
@@ -563,7 +575,6 @@
         private System.Windows.Forms.TrackBar trackBar_Music_Player;
         private System.Windows.Forms.Label label_time;
         private System.Windows.Forms.Timer time_TrackBar_Increase;
-        private System.Windows.Forms.Panel panel_Music_Name;
         private System.Windows.Forms.ImageList imageList_Play_Pause;
         private System.Windows.Forms.OpenFileDialog open_File_Dialog;
         private System.Windows.Forms.Button button_File_UpLoad;
@@ -571,6 +582,8 @@
         private System.Windows.Forms.RadioButton radioButton_Option_List_One;
         private System.Windows.Forms.RadioButton radioButton_Option_List;
         private System.Windows.Forms.GroupBox groupBox_Play_Option;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

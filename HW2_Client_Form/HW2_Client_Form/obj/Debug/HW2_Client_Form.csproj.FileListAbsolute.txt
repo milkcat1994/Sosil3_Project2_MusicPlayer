@@ -4,8 +4,6 @@ D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\obj\Debug\HW2_Client_Form.csproj.ResolveComReference.cache
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\bin\Debug\HW2_Client_Form.exe
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\bin\Debug\HW2_Client_Form.pdb
-D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\bin\Debug\HW2_Packet_Form.dll
-D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\bin\Debug\HW2_Packet_Form.pdb
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\bin\Debug\Interop.Shell32.dll
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\obj\Debug\HW2_Client_Form.csprojResolveAssemblyReference.cache
 D:\school\3\Linux\HW\HW2\Sosil3_Project2_MusicPlayer\HW2_Client_Form\HW2_Client_Form\obj\Debug\HW2_Client_Form.form_Client.resources
